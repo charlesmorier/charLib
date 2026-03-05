@@ -1,0 +1,18 @@
+[project]
+name = "charlib"
+version = "0.0.1"
+description = "Charlie's library"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scipy",
+    "QuantLib",
+    "matplotlib",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+]
