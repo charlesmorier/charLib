@@ -73,7 +73,7 @@ class Curve(ABC):
         return fwd.item() if fwd.size == 1 else fwd
  
  
-class OutrightCurve(Curve):
+class BaseCurve(Curve):
  
     def __init__(self, reference_date = ql.Date.todaysDate(), nodes = None, dfs = None, params = None):
         super().__init__(reference_date=reference_date, nodes=nodes, values=dfs, params=params)
@@ -117,7 +117,7 @@ class OutrightCurve(Curve):
  
 class SpreadCurve(Curve):
  
-    def __init__(self, reference_date = ql.Date.todaysDate(), outright_curve = OutrightCurve(), nodes = None, spreads = None, params = None):
+    def __init__(self, reference_date = ql.Date.todaysDate(), outright_curve = BaseCurve(), nodes = None, spreads = None, params = None):
         super().__init__(reference_date=reference_date, nodes=nodes, values=spreads, params=params)
         self.outright_curve = outright_curve
         if spreads is None:
@@ -243,22 +243,22 @@ class CurvesSet:
         return res
  
     def _pack_solving_values(self, this_curve):
-        if isinstance(this_curve, OutrightCurve):
+        if isinstance(this_curve, BaseCurve):
             return this_curve.dfs[1:]
         elif isinstance(this_curve, SpreadCurve):
             #return this_curve.spreads
             return this_curve.spreads[1:]
         else:
-            TypeError(f"Must give an OutrightCurve or a SpreadCurve; got {type(this_curve).__name__}")
+            TypeError(f"Must give an BaseCurve or a SpreadCurve; got {type(this_curve).__name__}")
  
     def _unpack_solving_values(self, this_curve, this_array):
-        if isinstance(this_curve, OutrightCurve):
+        if isinstance(this_curve, BaseCurve):
             this_curve.dfs = np.concatenate(([1.0], this_array))
         elif isinstance(this_curve, SpreadCurve):
             #this_curve.spreads = this_array
             this_curve.spreads = np.concatenate(([1.0], this_array))
         else:
-            TypeError(f"Must give an OutrightCurve or a SpreadCurve; got {type(this_curve).__name__}")
+            TypeError(f"Must give an BaseCurve or a SpreadCurve; got {type(this_curve).__name__}")
  
  
 class CalibrationBasket():

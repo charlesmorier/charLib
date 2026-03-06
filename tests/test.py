@@ -1,5 +1,5 @@
 from charlib import curves
 
-test = curves.OutrightCurve()
+test = curves.BaseCurve()
 
 print('hello')
