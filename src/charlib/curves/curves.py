@@ -79,7 +79,7 @@ class BaseCurve(Curve):
         super().__init__(reference_date=reference_date, nodes=nodes, values=dfs, params=params)
         if dfs is None:
             if self.nodes is not None:
-                self.dfs = np.exp([-0.03] * np.array(self.t))
+                self.dfs = np.exp(-0.03 * np.array(self.t))
             else:
                 self.dfs = None
         elif self.nodes is None:
@@ -117,13 +117,12 @@ class BaseCurve(Curve):
  
 class SpreadCurve(Curve):
  
-    def __init__(self, reference_date = ql.Date.todaysDate(), outright_curve = BaseCurve(), nodes = None, spreads = None, params = None):
+    def __init__(self, reference_date = ql.Date.todaysDate(), outright_curve = None, nodes = None, spreads = None, params = None):
         super().__init__(reference_date=reference_date, nodes=nodes, values=spreads, params=params)
-        self.outright_curve = outright_curve
+        self.outright_curve = outright_curve if outright_curve is not None else BaseCurve()
         if spreads is None:
             if self.nodes is not None:
-                #self.spreads = [0] * len(self.nodes)
-                self.spreads = np.exp([-0.001] * np.array(self.t))
+                self.spreads = np.exp(-0.001 * np.array(self.t))
             else:
                 self.spreads = None
         elif self.nodes is None:
@@ -137,8 +136,6 @@ class SpreadCurve(Curve):
  
     @spreads.setter
     def spreads(self, spreads):
-        # self._spreads = spreads
-        # self.values = spreads
         self._spreads = spreads
         if self._spreads is not None:
             self.values = np.log(spreads)
@@ -146,7 +143,6 @@ class SpreadCurve(Curve):
             self.values = spreads
  
     def discount_factor(self, this_date):
-        #raise NotImplementedError('This curve is for forecasting forward rates only')
         if isinstance(this_date, ql.Date):
             this_date = ql.Actual365Fixed().yearFraction(self.reference_date, this_date)
         elif isinstance(this_date, (list, tuple, np.ndarray)):
@@ -161,7 +157,12 @@ class CurvesSet:
  
     def __init__(self, curves_mapping):
         self.curves_mapping = curves_mapping
+        self.calibration_basket = None
         self.jacobian_matrix = None
+        self.iter = 0
+        self.n = 0
+        self.split = None
+        self.theta = None
  
     def __getitem__(self, this_curve):
         return self.get_curve(this_curve)
@@ -213,18 +214,17 @@ class CurvesSet:
         return theta
  
     def fast_calibration(self):
-    # Currently, there is no check re size of the Jacobian vs size of instruments. 
-    # Also there is no check re tolerance vs market move
+        # Currently, there is no check re size of the Jacobian vs size of instruments.
+        # Also there is no check re tolerance vs market move
         print('i am faaaaaast!!!')
         q_new = [value['quote'] for key, value in self.calibration_basket.items()]
         d_q = np.array(q_new) - np.array(self.q_old)
-        lam = 1e-10 
-        tmp = np.linalg.solve(self.jacobian_matrix.T @ self.jacobian_matrix + lam * np.eye(self.jacobian_matrix.shape[1]), self.jacobian_matrix.T @ d_q)
-        theta = self.theta + np.linalg.solve(self.jacobian_matrix.T @ self.jacobian_matrix + lam * np.eye(self.jacobian_matrix.shape[1]), self.jacobian_matrix.T @ d_q)
+        lam = 1e-10
+        delta = np.linalg.solve(self.jacobian_matrix.T @ self.jacobian_matrix + lam * np.eye(self.jacobian_matrix.shape[1]), self.jacobian_matrix.T @ d_q)
+        theta = self.theta + delta
         return theta
  
     def objective_function(self, solving_values):
-        #print(self.iter)
         solving_values_tmp = np.split(solving_values, self.splits)
         for (key, curve), x in zip(self.curves_mapping.items(), solving_values_tmp):
             self._unpack_solving_values(curve, x)
@@ -242,26 +242,26 @@ class CurvesSet:
             res[key] = {'market': value['quote'], 'model': round(float(x), 5), 'diff': round(float((x - value['quote'])),5)}
         return res
  
-    def _pack_solving_values(self, this_curve):
+    @staticmethod
+    def _pack_solving_values(this_curve):
         if isinstance(this_curve, BaseCurve):
             return this_curve.dfs[1:]
         elif isinstance(this_curve, SpreadCurve):
-            #return this_curve.spreads
             return this_curve.spreads[1:]
         else:
-            TypeError(f"Must give an BaseCurve or a SpreadCurve; got {type(this_curve).__name__}")
+            raise TypeError(f"Must give a BaseCurve or a SpreadCurve; got {type(this_curve).__name__}")
  
-    def _unpack_solving_values(self, this_curve, this_array):
+    @staticmethod
+    def _unpack_solving_values(this_curve, this_array):
         if isinstance(this_curve, BaseCurve):
             this_curve.dfs = np.concatenate(([1.0], this_array))
         elif isinstance(this_curve, SpreadCurve):
-            #this_curve.spreads = this_array
             this_curve.spreads = np.concatenate(([1.0], this_array))
         else:
-            TypeError(f"Must give an BaseCurve or a SpreadCurve; got {type(this_curve).__name__}")
+            raise TypeError(f"Must give a BaseCurve or a SpreadCurve; got {type(this_curve).__name__}")
  
  
-class CalibrationBasket():
+class CalibrationBasket:
  
     def __init__(self, basket, constraints=None):
         self.basket = basket
@@ -280,7 +280,7 @@ class CalibrationBasket():
         # Used on subset_basket for the fast calibration
         return [value['quote'] for key, value in self.subset_basket.items()]
  
-    def price_all(self, curvesSet):
-        return [value['object'].implied_rate_spread(curvesSet) for key, value in self.full_basket.items()]
+    def price_all(self, curves_set):
+        return [value['object'].implied_rate_spread(curves_set) for key, value in self.full_basket.items()]
 
 
