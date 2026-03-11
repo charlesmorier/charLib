@@ -222,4 +222,5 @@ rba_dates = {
     'Mar30': ql.Date(20, 3, 2030),
 }
 
-
+def hello():
+    print('hello')
