@@ -11,15 +11,17 @@ from charlib.maths import interpolation
  
 class Curve(ABC):
  
-    def __init__(self, reference_date = ql.Date.todaysDate(), nodes = None, values = None, params = None):
+    def __init__(self, reference_date = ql.Date.todaysDate(), nodes = None, values = None, **kwargs):
         self.interpolation_engine = None
         self.reference_date = reference_date
         self.nodes = nodes
         self.values = values
-        self.params = params
-        if self.params is not None:
-            self.interpolation_engine = interpolation.InterpolationEngine(x = self.t, y = self.values, scheme=params['scheme'], split_interpolation=params['split_interpolation'])
- 
+        #self.params = params
+        #if self.params is not None:
+        #    self.interpolation_engine = interpolation.InterpolationEngine(x = self.t, y = self.values, scheme=params['scheme'], split_interpolation=params['split_interpolation'])
+        if "interpolation" in kwargs:
+
+
     def __len__(self):
         return len(self.t)
  
