@@ -192,16 +192,12 @@ def run_test():
     # no split
     engine = InterpolationEngine(x, y, scheme="linear")
     print(engine.interpolate(5.5))  # float, between 1Y and 18M
-    print(engine.interpolate([0.5, 1.0, 2.0, 5.0]))  # array
+    print(engine.interpolate([0.51, 1.3, 1.9, 2.1, 5.0]))  # array
 
     # with split: linear on short end, pchip on long end
     engine_split = InterpolationEngine(x, y, scheme="linear", split_scheme="pchip", split_node=2.0, )
     print(engine_split.interpolate(5.5))
-    print(engine_split.interpolate([0.5, 1.0, 2.0, 5.0]))
+    print(engine_split.interpolate([0.51, 1.3, 1.9, 2.1, 5.0]))
 
-    # update y in place (e.g. after a reprice) -- triggers rebuild automatically
-    #y_new = y * 0.999
-    #engine_split.y = y_new
-    #print(engine_split.interpolate(5.0))
 
-#run_test()
+run_test()
