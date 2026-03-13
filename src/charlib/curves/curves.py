@@ -9,6 +9,7 @@ from charlib.curves import pricingobjects
 from charlib.maths import interpolation
 from charlib.utility import dates
 from charlib.curves import instruments
+from charlib.curves import pricingobjects
 
 
 class Curve(ABC):
@@ -267,6 +268,7 @@ class CurvesSet:
         spot_date = dates.parse_date('1b', self.reference_date)
         curves_mapping = {}
         basket = {}
+        constraints = None
 
         for curve_key, cfg in curves_definitions.items():
             pillars_dates = [dates.parse_date(t, spot_date) for t in cfg['pillars']]
@@ -288,17 +290,46 @@ class CurvesSet:
             for inst_name, inst_cfg in cfg["instruments"].items():
                 if inst_name not in instruments.instruments_definitions:
                     raise KeyError(f"Instrument '{inst_name}' not found in instruments registry.")
-                inst_def = instruments.instruments_definitions[inst_name]
-                pricing_object = instruments.create_pricing_object_from_convention(start_date = inst_def['start_date'], end_date = inst_def['end_date'], notional=1, convention = inst_def['convention'])
-                basket[inst_name] = {
-                    'object': pricing_object,
-                    'quote': 0,
-                    'weight': inst_cfg['weight'],
-                    'include': inst_cfg['include'],
-                }
+                if inst_cfg['include']:
+                    inst_def = instruments.instruments_definitions[inst_name]
+                    pricing_object = instruments.create_pricing_object_from_convention(start_date = inst_def['start_date'], end_date = inst_def['end_date'], notional=1, convention = inst_def['convention'])
+                    basket[inst_name] = {
+                        'object': pricing_object,
+                        'quote': 0,
+                        'weight': inst_cfg['weight'],
+                        'include': inst_cfg['include'],
+                    }
 
-        calibration_basket = CalibrationBasket(basket)
-        return curves_mapping, calibration_basket
+            constraints = None
+            constraints_cfg = cfg.get("constraints", None)
+            if constraints_cfg is not None:
+                constraints = {}
+                for constraint_name, constraint_cfg in constraints_cfg.items():
+                    pricing_objects = []
+                    for inst_name in constraint_cfg["instruments"]:
+                        if inst_name not in instruments.instruments_definitions:
+                            raise KeyError(f"Instrument '{inst_name}' not found in instruments registry.")
+                        if inst_name in basket:
+                            pricing_objects.append(basket[inst_name]['object'])
+                        else:
+                            inst_def = instruments.instruments_definitions[inst_name]
+                            pricing_objects.append(
+                                instruments.create_pricing_object_from_convention(
+                                    start_date=inst_def['start_date'],
+                                    end_date=inst_def['end_date'],
+                                    notional=1,
+                                    convention=inst_def['convention'],
+                                )
+                            )
+                    constraints[constraint_name] = {
+                        'object': instruments.create_constraint(pricing_objects),
+                        'quote': constraint_cfg['value'],
+                        'weight': constraint_cfg['weight'],
+                        'include': constraint_cfg['include'],
+                    }
+                basket = {**basket, **constraints}
+
+        return curves_mapping, CalibrationBasket(basket)
 
 
     def calibrate(self, fast_rebuild_mode = False):
@@ -343,6 +374,7 @@ class CurvesSet:
             self._unpack_solving_values(curve, x)
         fit = []
         for key, value in self.calibration_basket.items():
+            print(f"key: {key} market: {value['quote']} model: {value['object'].implied_rate_spread(self)}")
             fit.append(np.sqrt(value['weight']) * (value['object'].implied_rate_spread(self) - value['quote']))
         obj = fit
         self.iter += 1
@@ -379,7 +411,7 @@ class CurvesSet:
 
 class CalibrationBasket:
  
-    def __init__(self, basket, constraints=None):
+    def __init__(self, basket):
         self.basket = basket
         self.tickers = {}
         self.set_bloomberg_tickers()
@@ -394,26 +426,34 @@ class CalibrationBasket:
         #    self.full_basket = self.basket
         #self.subset_basket = {key: {'object': value['object'], 'quote': value['quote'], 'weight': value['weight']} for key, value in self.full_basket.items() if value.get('include') == True}
 
+
     def __getitem__(self, key):
         return self.basket[key]
+
 
     def __setitem__(self, key, value):
         self.basket[key] = value
 
+
     def __contains__(self, key):
         return key in self.basket
+
 
     def __len__(self):
         return len(self.basket)
 
+
     def __iter__(self):
         return iter(self.basket)
+
 
     def keys(self):
         return self.basket.keys()
 
+
     def values(self):
         return self.basket.values()
+
 
     def items(self):
         return self.basket.items()
@@ -421,7 +461,8 @@ class CalibrationBasket:
 
     def set_bloomberg_tickers(self):
         for key, value in self.basket.items():
-            self.tickers[key] = instruments.instruments_definitions[key]['ticker']
+            if getattr(value, 'ticker', None) is not None:
+                self.tickers[key] = instruments.instruments_definitions[key]['ticker']
 
 
     def set_market_quotes(self, market_quotes: dict) -> None:
@@ -435,7 +476,7 @@ class CalibrationBasket:
 
 
     def price_all(self, curves_set):
-        return [value['object'].implied_rate_spread(curves_set) for key, value in self.full_basket.items()]
+        return [value['object'].implied_rate_spread(curves_set) for key, value in self.basket.items()]
 
 
 
@@ -449,7 +490,8 @@ def run_test():
         "aud.aonia.1d": {
           "instruments": {
             "aud_cash_1d":  {"include": True, "weight": 1},
-                "aud_ib_1":     {"include": True, "weight": 1},
+                "aud_ois_rba1": {"include": True, "weight": 1},
+                "aud_ib_1":     {"include": False, "weight": 1},
                 "aud_ib_2":     {"include": True, "weight": 1},
                 "aud_ib_3":     {"include": True, "weight": 1},
                 "aud_ib_4":     {"include": True, "weight": 1},
@@ -457,81 +499,79 @@ def run_test():
                 "aud_ib_6":     {"include": True, "weight": 1},
                 "aud_ib_7":     {"include": True, "weight": 1},
                 "aud_ib_8":     {"include": True, "weight": 1},
-                "aud_ib_9":     {"include": False, "weight": 1},
-                "aud_ib_10":    {"include": False, "weight": 1},
-                "aud_ib_11":    {"include": False, "weight": 1},
-                "aud_ib_12":    {"include": False, "weight": 1},
-                "aud_bob_1y":   {"include": False, "weight": 1},
-                "aud_bob_18m":  {"include": False, "weight": 1},
-                "aud_bob_2y":   {"include": False, "weight": 1},
-                "aud_bob_3y":   {"include": False, "weight": 1}
+                "aud_ib_9":     {"include": True, "weight": 1},
+                "aud_ib_10":    {"include": True, "weight": 1},
+                "aud_ib_11":    {"include": True, "weight": 1},
+                "aud_ib_12":    {"include": True, "weight": 1},
+                #"aud_bob_1y":   {"include": False, "weight": 1},
+                #"aud_bob_18m":  {"include": False, "weight": 1},
+                #"aud_bob_2y":   {"include": False, "weight": 1},
+                #"aud_bob_3y":   {"include": False, "weight": 1}
           },
-            "pillars": [ql.Date.todaysDate(), "rba1", "rba2", "rba3", "rba4", "rba5", "rba6", "rba7", "rba8", "18m", "2y", "3y"],
+            "constraints": {
+                "cash_rba1_rba2": {"instruments": ["aud_cash_1d", "aud_ois_rba1", "aud_ois_rba2"], "value": 0, "include": True, "weight": 0.001},
+                "rba1_rba2_rba3": {"instruments": ["aud_ois_rba1", "aud_ois_rba2", "aud_ois_rba3"], "value": 0, "include": True, "weight": 0.001},
+                "rba2_rba3_rba4": {"instruments": ["aud_ois_rba2", "aud_ois_rba3", "aud_ois_rba4"], "value": 0, "include": True, "weight": 0.001},
+                "rba3_rba4_rba5": {"instruments": ["aud_ois_rba3", "aud_ois_rba4", "aud_ois_rba5"], "value": 0, "include": True, "weight": 0.001},
+                "rba4_rba5_rba6": {"instruments": ["aud_ois_rba4", "aud_ois_rba5", "aud_ois_rba6"], "value": 0, "include": True, "weight": 0.001},
+                "rba5_rba6_rba7": {"instruments": ["aud_ois_rba5", "aud_ois_rba6", "aud_ois_rba7"], "value": 0, "include": True, "weight": 0.001},
+                "rba6_rba7_rba8": {"instruments": ["aud_ois_rba6", "aud_ois_rba7", "aud_ois_rba8"], "value": 0, "include": True, "weight": 0.001},
+            },
+            "pillars": [ql.Date.todaysDate(), "rba1", "rba2", "rba3", "rba4", "rba5", "rba6", "rba7", "rba8"],
             "scheme": "linear",
-            "split_scheme": "bspline",
-            "split_node": dates.parse_date("rba8"),
-            "constraint": None
+            #"split_scheme": "bspline",
+            #"split_node": dates.parse_date("rba8"),
         },
 
-        "aud.bbsw.3m": {
-          "instruments": {
-                "aud_bill_3m":	{"include": True, "weight": 1},
-                "aud_sfe_1":    {"include": True, "weight": 1},
-                "aud_sfe_2":    {"include": False, "weight": 1},
-                "aud_sfe_3":    {"include": False, "weight": 1},
-                "aud_sfe_4":    {"include": False, "weight": 1},
-                "aud_sfe_5":    {"include": False, "weight": 1},
-                "aud_sfe_6":    {"include": False, "weight": 1},
-                "aud_sfe_7":    {"include": False, "weight": 1},
-                "aud_sfe_8":    {"include": False, "weight": 1},
-                "aud_irs_3y":   {"include": False, "weight": 1}
-          },
-            "pillars": [ql.Date.todaysDate(), "sfe1", "sfe2", "sfe3", "sfe4", "sfe5", "sfe6", "sfe7", "sfe8", "sfe9", "3y"],
-            "base_curve": "aud.aonia.1d",
-            "interpolation": "bspline",
-            "constraint": None
-        }
+        #"aud.bbsw.3m": {
+        #  "instruments": {
+        #        "aud_bill_3m":	{"include": False, "weight": 1},
+        ##        "aud_sfe_1":    {"include": False, "weight": 1},
+         #       "aud_sfe_2":    {"include": False, "weight": 1},
+         #       "aud_sfe_3":    {"include": False, "weight": 1},
+         #       "aud_sfe_4":    {"include": False, "weight": 1},
+         #       "aud_sfe_5":    {"include": False, "weight": 1},
+         #       "aud_sfe_6":    {"include": False, "weight": 1},
+         #       "aud_sfe_7":    {"include": False, "weight": 1},
+         ##       "aud_sfe_8":    {"include": False, "weight": 1},
+         #       "aud_irs_3y":   {"include": False, "weight": 1}
+         # },
+         #   "pillars": [ql.Date.todaysDate(), "sfe1", "sfe2", "sfe3", "sfe4", "sfe5", "sfe6", "sfe7", "sfe8", "sfe9", "3y"],
+         #   "base_curve": "aud.aonia.1d",
+         #   "interpolation": "bspline",
+        #}
       }
     }
 
     quotes = {
-        'aud_cash_1d': 0.0435,
-        'aud_ib_1': 0.0437,
-        'aud_ib_2': 0.0438,
-        'aud_ib_3': 0.0440,
-        'aud_ib_4': 0.0441,
-        'aud_ib_5': 0.0442,
-        'aud_ib_6': 0.0443,
-        'aud_ib_7': 0.0444,
-        'aud_ib_8': 0.0445,
-        'aud_ib_9': 0.0446,
-        'aud_ib_10': 0.0447,
-        'aud_ib_11': 0.0448,
-        'aud_ib_12': 0.0449,
-        'aud_bob_1y': 0.0450,
-        'aud_bob_18m': 0.0455,
-        'aud_bob_2y': 0.0460,
-        'aud_bob_3y': 0.0465,
-        'aud_bill_3m': 0.0452,
-        'aud_sfe_1': 0.0453,
-        'aud_sfe_2': 0.0455,
-        'aud_sfe_3': 0.0457,
-        'aud_sfe_4': 0.0460,
-        'aud_sfe_5': 0.0462,
-        'aud_sfe_6': 0.0463,
-        'aud_sfe_7': 0.0464,
-        'aud_sfe_8': 0.0465,
-        'aud_irs_3y': 0.0468,
+        'aud_cash_1d': 0.0385,
+        'aud_ib_2': 95.98,
+        'aud_ib_3': 95.835,
+        'aud_ib_4': 95.785,
+        'aud_ib_5': 95.755,
+        'aud_ib_6': 95.66,
+        'aud_ib_7': 95.60,
+        'aud_ib_8': 95.54,
+        'aud_ib_9': 95.475,
+        'aud_ib_10': 95.46,
+        'aud_ib_11': 95.46,
+        'aud_ib_12': 95.46,
     }
 
     curves_definitions = curves_definitions["AUD"]
     my_curves_set = CurvesSet(reference_date=ql.Date.todaysDate(), curves_definitions=curves_definitions)
+    #print(my_curves_set.calibration_basket.basket)
+    print(my_curves_set.calibration_basket.price_all(my_curves_set))
+
+    a = instruments.create_pricing_object_from_convention("1b", "1b", 1, 'aud.fwd.aonia')
+    print(a.start_date)
+    print(a.end_date)
+    print(a.price(my_curves_set))
+
     my_curves_set.calibration_basket.set_market_quotes(quotes)
     my_curves_set.calibrate()
     t = np.arange(0, 1 + 1 / 365, 1 / 365)
     fwds = my_curves_set['aud.aonia.1d'].forward_rate(t[:-1], t[1:])
-
-    print(my_curves_set['aud.aonia.1d'].nodes)
 
     plt.plot(t[:-1], fwds)
     plt.grid(True)
@@ -544,4 +584,7 @@ def run_test():
     #plt.grid(True)
     #plt.show()
 
-run_test()
+    #a = pricingobjects.Future("bom1", "eom1", {'forecasting_curve': 'aud.aonia.1d'})
+    #print(a.price(my_curves_set))
+
+#run_test()

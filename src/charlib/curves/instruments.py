@@ -23,84 +23,84 @@ instruments_definitions = {
     "aud_ib_1": {
         "start_date": "bom0",
         "end_date": "eom0",
-        "convention": "aud.fwd.aonia",
+        "convention": 'aud.ib.aonia',
         "ticker": "IB1 Comdty"
     },
 
     "aud_ib_2": {
         "start_date": "bom1",
         "end_date": "eom1",
-        "convention": "aud.fwd.aonia",
+        "convention": "aud.ib.aonia",
         "ticker": "IB2 Comdty"
     },
 
     "aud_ib_3": {
         "start_date": "bom2",
         "end_date": "eom2",
-        "convention": "aud.fwd.aonia",
+        "convention": 'aud.ib.aonia',
         "ticker": "IB3 Comdty"
     },
 
     "aud_ib_4": {
         "start_date": "bom3",
         "end_date": "eom3",
-        "convention": "aud.fwd.aonia",
+        "convention": 'aud.ib.aonia',
         "ticker": "IB4 Comdty"
     },
 
     "aud_ib_5": {
         "start_date": "bom4",
         "end_date": "eom4",
-        "convention": "aud.fwd.aonia",
+        "convention": 'aud.ib.aonia',
         "ticker": "IB5 Comdty"
     },
 
     "aud_ib_6": {
         "start_date": "bom5",
         "end_date": "eom5",
-        "convention": "aud.fwd.aonia",
+        "convention": 'aud.ib.aonia',
         "ticker": "IB6 Comdty"
     },
 
     "aud_ib_7": {
         "start_date": "bom6",
         "end_date": "eom6",
-        "convention": "aud.fwd.aonia",
+        "convention": 'aud.ib.aonia',
         "ticker": "IB7 Comdty"
     },
 
     "aud_ib_8": {
         "start_date": "bom7",
         "end_date": "eom7",
-        "convention": "aud.fwd.aonia",
+        "convention": 'aud.ib.aonia',
         "ticker": "IB8 Comdty"
     },
 
     "aud_ib_9": {
         "start_date": "bom8",
         "end_date": "eom8",
-        "convention": "aud.fwd.aonia",
+        "convention": 'aud.ib.aonia',
         "ticker": "IB9 Comdty"
     },
 
     "aud_ib_10": {
         "start_date": "bom9",
         "end_date": "eom9",
-        "convention": "aud.fwd.aonia",
+        "convention": 'aud.ib.aonia',
         "ticker": "IB10 Comdty"
     },
 
     "aud_ib_11": {
         "start_date": "bom10",
         "end_date": "eom10",
-        "convention": "aud.fwd.aonia",
+        "convention": 'aud.ib.aonia',
         "ticker": "IB11 Comdty"
     },
 
     "aud_ib_12": {
         "start_date": "bom11",
         "end_date": "eom11",
-        "convention": "aud.fwd.aonia",
+        "convention": 'aud.ib.aonia',
         "ticker": "IB12 Comdty"
     },
 
@@ -295,11 +295,12 @@ def create_pricing_object_from_convention(start_date, end_date, notional, conven
     if this_convention['type'] in (swaps.VanillaSwap, swaps.TermBasisSwap):
         return create_swap_from_convention(this_start_date, end_date, notional, convention)
     else:
-        return pricingobjects.ForwardRate(
-            this_start_date,
-            this_end_date,
-            this_convention['curves_bindings'],
-        )
+        return this_convention['type'](this_start_date, this_end_date, this_convention['curves_bindings'])
+        #return pricingobjects.ForwardRate(
+        #    this_start_date,
+        #    this_end_date,
+        #    this_convention['curves_bindings'],
+        #)
 
 
 def create_swap_from_convention(start_date, end_date, notional, convention):
