@@ -475,8 +475,8 @@ def run_test():
 
         "aud.bbsw.3m": {
           "instruments": {
-                "aud_bill_3m":	{"include": False, "weight": 1},
-                "aud_sfe_1":    {"include": False, "weight": 1},
+                "aud_bill_3m":	{"include": True, "weight": 1},
+                "aud_sfe_1":    {"include": True, "weight": 1},
                 "aud_sfe_2":    {"include": False, "weight": 1},
                 "aud_sfe_3":    {"include": False, "weight": 1},
                 "aud_sfe_4":    {"include": False, "weight": 1},
@@ -544,5 +544,4 @@ def run_test():
     #plt.grid(True)
     #plt.show()
 
-
-#run_test()
+run_test()

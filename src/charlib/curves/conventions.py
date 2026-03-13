@@ -48,7 +48,23 @@ all_conventions = {
         'curves_bindings': {'forecasting_curve': 'aud.bbsw.6m'},
         'scale': 100
     },
- 
+
+    'aud.ib.aonia': {
+        'type': pricingobjects.Future,
+        'ccy': 'aud',
+        'calendar': calendar_australia,
+        'curves_bindings': {'forecasting_curve': 'aud.aonia.1d'},
+        'scale': 1
+    },
+
+    'aud.sfe.bbsw3m': {
+        'type': pricingobjects.Future,
+        'ccy': 'aud',
+        'calendar': calendar_australia,
+        'curves_bindings': {'forecasting_curve': 'aud.bbsw.3m'},
+        'scale': 1
+    },
+
     'aud.irs.zz.aonia.aonia': {
         'type': swaps.VanillaSwap,
         'ccy': 'aud',

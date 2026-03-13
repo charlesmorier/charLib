@@ -10,105 +10,105 @@ instruments_definitions = {
         "start_date": "1b",
         "end_date": "1b",
         "convention": "aud.fwd.aonia",
-        "ticker": "RBACOR Curncy"
+        "ticker": "RBACOR Index"
     },
 
 	"aud_bill_3m": {
         "start_date": "1b",
         "end_date": "3m",
         "convention": "aud.fwd.bbsw3m",
-        "ticker": "BBSW3M Curncy"
+        "ticker": "BBSW3M Index"
     },
 
     "aud_ib_1": {
         "start_date": "bom0",
         "end_date": "eom0",
         "convention": "aud.fwd.aonia",
-        "ticker": "IB1 Curncy"
+        "ticker": "IB1 Comdty"
     },
 
     "aud_ib_2": {
         "start_date": "bom1",
         "end_date": "eom1",
         "convention": "aud.fwd.aonia",
-        "ticker": "IB2 Curncy"
+        "ticker": "IB2 Comdty"
     },
 
     "aud_ib_3": {
         "start_date": "bom2",
         "end_date": "eom2",
         "convention": "aud.fwd.aonia",
-        "ticker": "IB3 Curncy"
+        "ticker": "IB3 Comdty"
     },
 
     "aud_ib_4": {
         "start_date": "bom3",
         "end_date": "eom3",
         "convention": "aud.fwd.aonia",
-        "ticker": "IB4 Curncy"
+        "ticker": "IB4 Comdty"
     },
 
     "aud_ib_5": {
         "start_date": "bom4",
         "end_date": "eom4",
         "convention": "aud.fwd.aonia",
-        "ticker": "IB5 Curncy"
+        "ticker": "IB5 Comdty"
     },
 
     "aud_ib_6": {
         "start_date": "bom5",
         "end_date": "eom5",
         "convention": "aud.fwd.aonia",
-        "ticker": "IB6 Curncy"
+        "ticker": "IB6 Comdty"
     },
 
     "aud_ib_7": {
         "start_date": "bom6",
         "end_date": "eom6",
         "convention": "aud.fwd.aonia",
-        "ticker": "IB7 Curncy"
+        "ticker": "IB7 Comdty"
     },
 
     "aud_ib_8": {
         "start_date": "bom7",
         "end_date": "eom7",
         "convention": "aud.fwd.aonia",
-        "ticker": "IB8 Curncy"
+        "ticker": "IB8 Comdty"
     },
 
     "aud_ib_9": {
         "start_date": "bom8",
         "end_date": "eom8",
         "convention": "aud.fwd.aonia",
-        "ticker": "IB9 Curncy"
+        "ticker": "IB9 Comdty"
     },
 
     "aud_ib_10": {
         "start_date": "bom9",
         "end_date": "eom9",
         "convention": "aud.fwd.aonia",
-        "ticker": "IB10 Curncy"
+        "ticker": "IB10 Comdty"
     },
 
     "aud_ib_11": {
         "start_date": "bom10",
         "end_date": "eom10",
         "convention": "aud.fwd.aonia",
-        "ticker": "IB11 Curncy"
+        "ticker": "IB11 Comdty"
     },
 
     "aud_ib_12": {
         "start_date": "bom11",
         "end_date": "eom11",
         "convention": "aud.fwd.aonia",
-        "ticker": "IB12 Curncy"
+        "ticker": "IB12 Comdty"
     },
 
 	"aud_ois_rba1": {
         "start_date": "rba1",
         "end_date": "rba2",
         "convention": "aud.fwd.aonia",
-        "ticker": "ADSF1A IAUS Curncy"
+        "ticker": "ADSF1A IAUS Comdty"
     },
 
 	"aud_ois_rba2": {
@@ -192,96 +192,96 @@ instruments_definitions = {
         "start_date": "sfe1",
         "end_date": "3m",
         "convention": "aud.fwd.bbsw3m",
-        "ticker": "IR1 Curncy"
+        "ticker": "IR1 Comdty"
     },
 
 	"aud_sfe_2": {
         "start_date": "sfe2",
         "end_date": "3m",
         "convention": "aud.fwd.bbsw3m",
-        "ticker": "IR2 Curncy"
+        "ticker": "IR2 Comdty"
     },
 
 	"aud_sfe_3":{
         "start_date": "sfe3",
         "end_date": "3m",
         "convention": "aud.fwd.bbsw3m",
-        "ticker": "IR3 Curncy"
+        "ticker": "IR3 Comdty"
     },
 
 	"aud_sfe_4": {
         "start_date": "sfe4",
         "end_date": "3m",
         "convention": "aud.fwd.bbsw3m",
-        "ticker": "IR4 Curncy"
+        "ticker": "IR4 Comdty"
     },
 
 	"aud_sfe_5": {
         "start_date": "sfe5",
         "end_date": "3m",
         "convention": "aud.fwd.bbsw3m",
-        "ticker": "IR5 Curncy"
+        "ticker": "IR5 Comdty"
     },
 
 	"aud_sfe_6": {
         "start_date": "sfe6",
         "end_date": "3m",
         "convention": "aud.fwd.bbsw3m",
-        "ticker": "IR6 Curncy"
+        "ticker": "IR6 Comdty"
     },
 
 	"aud_sfe_7": {
         "start_date": "sfe7",
         "end_date": "3m",
         "convention": "aud.fwd.bbsw3m",
-        "ticker": "IR7 Curncy"
+        "ticker": "IR7 Comdty"
     },
 
 	"aud_sfe_8": {
         "start_date": "sfe8",
         "end_date": "3m",
         "convention": "aud.fwd.bbsw3m",
-        "ticker": "IR8 Curncy"
+        "ticker": "IR8 Comdty"
     },
 
 	"aud_sfe_9": {
         "start_date": "sfe9",
         "end_date": "3m",
         "convention": "aud.fwd.bbsw3m",
-        "ticker": "IR9 Curncy"},
+        "ticker": "IR9 Comdty"},
 
 	"aud_irs_3y": {
         "start_date": "1b",
         "end_date": "3y",
         "convention": "aud.irs.qq.bbsw.aonia",
-        "ticker": "ADSWAP3Q Curncy"
+        "ticker": "ADSWAP3Q Comdty"
     },
 
 	"aud_bob_1y": {
         "start_date": "1b",
         "end_date": "1y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ1 IAUS Curncy"},
+        "ticker": "ADOIQQ1 IAUS Comdty"},
 
 	"aud_bob_18m": {
         "start_date": "1b",
         "end_date": "18m",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ1F Curncy"
+        "ticker": "ADOIQQ1F Comdty"
     },
 
 	"aud_bob_2y": {
         "start_date": "1b",
         "end_date": "2y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ2 Curncy"
+        "ticker": "ADOIQQ2 Comdty"
     },
 
 	"aud_bob_3y": {
         "start_date": "1b",
         "end_date": "3y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ3 Curncy"
+        "ticker": "ADOIQQ3 Comdty"
     },
 
 }

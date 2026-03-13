@@ -37,6 +37,27 @@ class ForwardRate(PricingObject):
         return self.price(curvesSet)
 
 
+class Future(PricingObject):
+    def __init__(self, start_date, end_date, curves_bindings=None):
+        super().__init__(curves_bindings)
+        self.start_date = start_date
+
+        if isinstance(end_date, ql.Date):
+            self.end_date = end_date
+        else:
+            self.end_date = ql.Australia().advance(
+                self.start_date,
+                ql.Period(end_date)
+            )
+
+        def price(self, curvesSet):
+            curve = curvesSet[self.curves_bindings['forecasting_curve']]
+            return 100.0 * (1.0 - curve.forward_rate(self.start_date, self.end_date))
+
+        def implied_rate_spread(self, curvesSet):
+            return self.price(curvesSet)
+
+
 class Spread(PricingObject):
     def __init__(self, pricing_object1, pricing_object2):
         super().__init__()
