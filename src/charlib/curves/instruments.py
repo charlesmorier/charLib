@@ -1,0 +1,351 @@
+import numpy as np
+from charlib.curves import conventions
+from charlib.curves import pricingobjects
+from charlib.curves import swaps
+from charlib.utility import dates
+
+instruments_definitions = {
+
+	"aud_cash_1d": {
+        "start_date": "1b",
+        "end_date": "1b",
+        "convention": "aud.fwd.aonia",
+        "ticker": "RBACOR Curncy"
+    },
+
+	"aud_bill_3m": {
+        "start_date": "1b",
+        "end_date": "3m",
+        "convention": "aud.fwd.bbsw3m",
+        "ticker": "BBSW3M Curncy"
+    },
+
+    "aud_ib_1": {
+        "start_date": "bom0",
+        "end_date": "eom0",
+        "convention": "aud.fwd.aonia",
+        "ticker": "IB1 Curncy"
+    },
+
+    "aud_ib_2": {
+        "start_date": "bom1",
+        "end_date": "eom1",
+        "convention": "aud.fwd.aonia",
+        "ticker": "IB2 Curncy"
+    },
+
+    "aud_ib_3": {
+        "start_date": "bom2",
+        "end_date": "eom2",
+        "convention": "aud.fwd.aonia",
+        "ticker": "IB3 Curncy"
+    },
+
+    "aud_ib_4": {
+        "start_date": "bom3",
+        "end_date": "eom3",
+        "convention": "aud.fwd.aonia",
+        "ticker": "IB4 Curncy"
+    },
+
+    "aud_ib_5": {
+        "start_date": "bom4",
+        "end_date": "eom4",
+        "convention": "aud.fwd.aonia",
+        "ticker": "IB5 Curncy"
+    },
+
+    "aud_ib_6": {
+        "start_date": "bom5",
+        "end_date": "eom5",
+        "convention": "aud.fwd.aonia",
+        "ticker": "IB6 Curncy"
+    },
+
+    "aud_ib_7": {
+        "start_date": "bom6",
+        "end_date": "eom6",
+        "convention": "aud.fwd.aonia",
+        "ticker": "IB7 Curncy"
+    },
+
+    "aud_ib_8": {
+        "start_date": "bom7",
+        "end_date": "eom7",
+        "convention": "aud.fwd.aonia",
+        "ticker": "IB8 Curncy"
+    },
+
+    "aud_ib_9": {
+        "start_date": "bom8",
+        "end_date": "eom8",
+        "convention": "aud.fwd.aonia",
+        "ticker": "IB9 Curncy"
+    },
+
+    "aud_ib_10": {
+        "start_date": "bom9",
+        "end_date": "eom9",
+        "convention": "aud.fwd.aonia",
+        "ticker": "IB10 Curncy"
+    },
+
+    "aud_ib_11": {
+        "start_date": "bom10",
+        "end_date": "eom10",
+        "convention": "aud.fwd.aonia",
+        "ticker": "IB11 Curncy"
+    },
+
+    "aud_ib_12": {
+        "start_date": "bom11",
+        "end_date": "eom11",
+        "convention": "aud.fwd.aonia",
+        "ticker": "IB12 Curncy"
+    },
+
+	"aud_ois_rba1": {
+        "start_date": "rba1",
+        "end_date": "rba2",
+        "convention": "aud.fwd.aonia",
+        "ticker": "ADSF1A IAUS Curncy"
+    },
+
+	"aud_ois_rba2": {
+        "start_date": "rba2",
+        "end_date": "rba3",
+        "convention": "aud.fwd.aonia",
+        "ticker": "ADSF2A IAUS Curncy"
+    },
+
+	"aud_ois_rba3": {
+        "start_date": "rba3",
+        "end_date": "rba4",
+        "convention": "aud.fwd.aonia",
+        "ticker": "ADSF3 IAUS Curncy"
+    },
+
+	"aud_ois_rba4": {
+        "start_date": "rba4",
+        "end_date": "rba5",
+        "convention": "aud.fwd.aonia",
+        "ticker": "ADSF4A IAUS Curncy"
+    },
+
+	"aud_ois_rba5": {
+        "start_date": "rba5",
+        "end_date": "rba6",
+        "convention": "aud.fwd.aonia",
+        "ticker": "ADSF5A IAUS Curncy"
+    },
+
+	"aud_ois_rba6": {
+        "start_date": "rba6",
+        "end_date": "rba7",
+        "convention": "aud.fwd.aonia",
+        "ticker": "ADSF6A IAUS Curncy"
+    },
+
+	"aud_ois_rba7": {
+        "start_date": "rba7",
+        "end_date": "rba8",
+        "convention": "aud.fwd.aonia",
+        "ticker": "ADSF7A IAUS Curncy"
+    },
+
+	"aud_ois_rba8": {
+        "start_date": "rba8",
+        "end_date": "rba9",
+        "convention": "aud.fwd.aonia",
+        "ticker": "ADSF8A IAUS Curncy"
+    },
+
+	"aud_ois_rba9": {
+        "start_date": "rba9",
+        "end_date": "rba10",
+        "convention": "aud.fwd.aonia",
+        "ticker": "ADSF9A IAUS Curncy"
+    },
+
+	"aud_ois_rba10": {
+        "start_date": "rba10",
+        "end_date": "rba11",
+        "convention": "aud.fwd.aonia",
+        "ticker": "ADSF10A IAUS Curncy"
+    },
+
+	"aud_ois_rba11": {
+        "start_date": "rba11",
+        "end_date": "rba12",
+        "convention": "aud.fwd.aonia",
+        "ticker": "ADSF11A IAUS Curncy"
+    },
+
+	"aud_ois_rba12": {
+        "start_date": "rba12",
+        "end_date": "rba13",
+        "convention": "aud.fwd.aonia",
+        "ticker": "ADSF12A IAUS Curncy"
+    },
+
+	"aud_sfe_1": {
+        "start_date": "sfe1",
+        "end_date": "3m",
+        "convention": "aud.fwd.bbsw3m",
+        "ticker": "IR1 Curncy"
+    },
+
+	"aud_sfe_2": {
+        "start_date": "sfe2",
+        "end_date": "3m",
+        "convention": "aud.fwd.bbsw3m",
+        "ticker": "IR2 Curncy"
+    },
+
+	"aud_sfe_3":{
+        "start_date": "sfe3",
+        "end_date": "3m",
+        "convention": "aud.fwd.bbsw3m",
+        "ticker": "IR3 Curncy"
+    },
+
+	"aud_sfe_4": {
+        "start_date": "sfe4",
+        "end_date": "3m",
+        "convention": "aud.fwd.bbsw3m",
+        "ticker": "IR4 Curncy"
+    },
+
+	"aud_sfe_5": {
+        "start_date": "sfe5",
+        "end_date": "3m",
+        "convention": "aud.fwd.bbsw3m",
+        "ticker": "IR5 Curncy"
+    },
+
+	"aud_sfe_6": {
+        "start_date": "sfe6",
+        "end_date": "3m",
+        "convention": "aud.fwd.bbsw3m",
+        "ticker": "IR6 Curncy"
+    },
+
+	"aud_sfe_7": {
+        "start_date": "sfe7",
+        "end_date": "3m",
+        "convention": "aud.fwd.bbsw3m",
+        "ticker": "IR7 Curncy"
+    },
+
+	"aud_sfe_8": {
+        "start_date": "sfe8",
+        "end_date": "3m",
+        "convention": "aud.fwd.bbsw3m",
+        "ticker": "IR8 Curncy"
+    },
+
+	"aud_sfe_9": {
+        "start_date": "sfe9",
+        "end_date": "3m",
+        "convention": "aud.fwd.bbsw3m",
+        "ticker": "IR9 Curncy"},
+
+	"aud_irs_3y": {
+        "start_date": "1b",
+        "end_date": "3y",
+        "convention": "aud.irs.qq.bbsw.aonia",
+        "ticker": "ADSWAP3Q Curncy"
+    },
+
+	"aud_bob_1y": {
+        "start_date": "1b",
+        "end_date": "1y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ1 IAUS Curncy"},
+
+	"aud_bob_18m": {
+        "start_date": "1b",
+        "end_date": "18m",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ1F Curncy"
+    },
+
+	"aud_bob_2y": {
+        "start_date": "1b",
+        "end_date": "2y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ2 Curncy"
+    },
+
+	"aud_bob_3y": {
+        "start_date": "1b",
+        "end_date": "3y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ3 Curncy"
+    },
+
+}
+
+
+def create_pricing_object_from_convention(start_date, end_date, notional, convention):
+    this_start_date = dates.parse_date(start_date)
+    this_end_date = dates.parse_date(end_date, this_start_date)
+    this_convention = conventions.all_conventions[convention]
+
+    if this_convention['type'] in (swaps.VanillaSwap, swaps.TermBasisSwap):
+        return create_swap_from_convention(this_start_date, end_date, notional, convention)
+    else:
+        return pricingobjects.ForwardRate(
+            this_start_date,
+            this_end_date,
+            this_convention['curves_bindings'],
+        )
+
+
+def create_swap_from_convention(start_date, end_date, notional, convention):
+    this_start_date = dates.parse_date(start_date)
+    this_end_date = dates.parse_date(end_date, this_start_date)
+    this_convention = conventions.all_conventions[convention]
+
+    return this_convention['type'](
+        this_start_date,
+        end_date,
+        this_convention['ccy'],
+        notional,
+        this_convention['left_leg'],
+        this_convention['right_leg'],
+        this_convention['curves_bindings'],
+    )
+
+
+def create_constraint(arr):
+    if isinstance(arr, (list, tuple, np.ndarray)):
+        if len(arr) == 2:
+            return pricingobjects.Spread(arr[0], arr[1])
+        elif len(arr) == 3:
+            return pricingobjects.Fly(arr[0], arr[1], arr[2])
+        else:
+            raise ValueError(
+                f"Contraint must be an array of size 2 for a spread or size 3 for a fly; got {len(arr)}"
+            )
+    else:
+        raise TypeError(
+            f"Contraint must be an array of size 2 for a spread or size 3 for a fly; got {type(arr).__name__}"
+        )
+
+
+def run_test():
+    bill = create_pricing_object_from_convention('1b', '3m', 1, 'aud.fwd.bbsw3m')
+    print(bill.start_date)
+    print(bill.end_date)
+    rba = create_pricing_object_from_convention("rba1", "rba2", 1, 'aud.fwd.aonia')
+    print(rba.start_date)
+    print(rba.end_date)
+    swap = create_swap_from_convention("1b", "3y", 1, "aud.irs.qq.bbsw.aonia")
+    print(swap.start_date)
+    print(swap.end_date)
+
+
+
+
+#run_test()

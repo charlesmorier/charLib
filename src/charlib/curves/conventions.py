@@ -29,7 +29,7 @@ all_conventions = {
         'type': pricingobjects.ForwardRate,
         'ccy': 'aud',
         'calendar': calendar_australia,
-        'curves_bindings': {'forecasting_curve': 'aonia'},
+        'curves_bindings': {'forecasting_curve': 'aud.aonia.1d'},
         'scale': 100
     },
  
@@ -37,7 +37,7 @@ all_conventions = {
         'type': pricingobjects.ForwardRate,
         'ccy': 'aud',
         'calendar': calendar_australia,
-        'curves_bindings': {'forecasting_curve': 'bbsw3m'},
+        'curves_bindings': {'forecasting_curve': 'aud.bbsw.3m'},
         'scale': 100
     },
  
@@ -45,7 +45,7 @@ all_conventions = {
         'type': pricingobjects.ForwardRate,
         'ccy': 'aud',
         'calendar': calendar_australia,
-        'curves_bindings': {'forecasting_curve': 'bbsw6m'},
+        'curves_bindings': {'forecasting_curve': 'aud.bbsw.6m'},
         'scale': 100
     },
  
@@ -65,7 +65,7 @@ all_conventions = {
                       'accrual_business_days_convention': convention_modified_following,
                       'payment_business_days_convention': convention_following,
                       'payment_lag': None},
-        'curves_bindings': {'discounting_curve': 'aonia', 'forecasting_curve': 'aonia'},
+        'curves_bindings': {'discounting_curve': 'aud.aonia.1', 'forecasting_curve': 'aud.aonia.1d'},
         'scale': 100
     },
  
@@ -85,7 +85,7 @@ all_conventions = {
                       'accrual_business_days_convention': convention_modified_following,
                       'payment_business_days_convention': convention_following,
                       'payment_lag': period_2b},
-        'curves_bindings': {'discounting_curve': 'aonia', 'forecasting_curve': 'aonia'},
+        'curves_bindings': {'discounting_curve': 'aud.aonia.1d', 'forecasting_curve': 'aud.aonia.1d'},
         'scale': 100
     },
  
@@ -105,7 +105,7 @@ all_conventions = {
                       'accrual_business_days_convention': convention_modified_following,
                       'payment_business_days_convention': convention_following,
                       'payment_lag': None},
-        'curves_bindings': {'discounting_curve': 'aonia', 'forecasting_curve': 'aonia'},
+        'curves_bindings': {'discounting_curve': 'aud.aonia.1d', 'forecasting_curve': 'aud.aonia.1d'},
         'scale': 100
     },
  
@@ -125,7 +125,7 @@ all_conventions = {
                       'accrual_business_days_convention': convention_modified_following,
                       'payment_business_days_convention': convention_following,
                       'payment_lag': None},
-        'curves_bindings': {'discounting_curve': 'aonia', 'forecasting_curve': 'bbsw3m'},
+        'curves_bindings': {'discounting_curve': 'aud.aonia.1d', 'forecasting_curve': 'aud.bbsw.3m'},
         'scale': 100
     },
     
@@ -145,7 +145,7 @@ all_conventions = {
                       'accrual_business_days_convention': convention_modified_following,
                       'payment_business_days_convention': convention_following,
                       'payment_lag': None},
-        'curves_bindings': {'discounting_curve': 'aonia', 'forecasting_curve': 'bbsw6m'},
+        'curves_bindings': {'discounting_curve': 'aud.aonia.1d', 'forecasting_curve': 'aud.bbsw.6m'},
         'scale': 100
     },
     
@@ -166,7 +166,7 @@ all_conventions = {
                       'accrual_business_days_convention': convention_modified_following,
                       'payment_business_days_convention': convention_following,
                       'payment_lag': None},
-        'curves_bindings': {'discounting_curve': 'aonia', 'left_leg_forecasting_curve': 'aonia', 'right_leg_forecasting_curve': 'bbsw3m'},
+        'curves_bindings': {'discounting_curve': 'aud.aonia.1d', 'left_leg_forecasting_curve': 'aud.aonia.1d', 'right_leg_forecasting_curve': 'aud.bbsw.3m'},
         'scale': 10000
     },
     
@@ -187,7 +187,7 @@ all_conventions = {
                       'accrual_business_days_convention': convention_modified_following,
                       'payment_business_days_convention': convention_following,
                       'payment_lag': None},
-        'curves_bindings': {'discounting_curve': 'aonia', 'left_leg_forecasting_curve': 'bbsw3m', 'right_leg_forecasting_curve': 'bbsw6m'},
+        'curves_bindings': {'discounting_curve': 'aud.aonia.1d', 'left_leg_forecasting_curve': 'aud.bbsw.3m', 'right_leg_forecasting_curve': 'aud.bbsw.6m'},
         'scale': 10000
     },
 }

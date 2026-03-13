@@ -392,11 +392,11 @@ def parse_date(value: ql.Date | str, anchor: ql.Date | str | None = None, calend
 
 
 
-pillars_aonia = ['rba1', 'rba2', 'rba3', 'rba4', 'rba5', 'rba6', 'rba7', 'rba8', 'rba9', '18m', '2y', '3y']
-pillars_bbsw3m = ['sfe1', 'sfe2', 'sfe3', 'sfe4', 'sfe5', 'sfe6', 'sfe7', 'sfe8', 'sfe9', '3y']
+#pillars_aonia = ['rba1', 'rba2', 'rba3', 'rba4', 'rba5', 'rba6', 'rba7', 'rba8', 'rba9', '18m', '2y', '3y']
+#pillars_bbsw3m = ['sfe1', 'sfe2', 'sfe3', 'sfe4', 'sfe5', 'sfe6', 'sfe7', 'sfe8', 'sfe9', '3y']
 
-spot_date = _parse_tenor('1b', today())
-pillars_aonia_dt = [parse_date(t, spot_date, calendar=ql.Australia()) for t in pillars_aonia]
-pillars_bbsw3m_dt = [parse_date(t, spot_date, calendar=ql.Australia()) for t in pillars_bbsw3m]
-print(pillars_aonia_dt)
-print(pillars_bbsw3m_dt)
+#spot_date = _parse_tenor('1b', today())
+#pillars_aonia_dt = [parse_date(t, spot_date, calendar=ql.Australia()) for t in pillars_aonia]
+#pillars_bbsw3m_dt = [parse_date(t, spot_date, calendar=ql.Australia()) for t in pillars_bbsw3m]
+#print(pillars_aonia_dt)
+#print(pillars_bbsw3m_dt)
