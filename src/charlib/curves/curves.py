@@ -9,6 +9,7 @@ from charlib.curves import pricingobjects
 from charlib.maths import interpolation
 from charlib.utility import dates
 from charlib.curves import instruments
+from charlib.curves import conventions
 from charlib.curves import pricingobjects
 
 
@@ -299,7 +300,7 @@ class CurvesSet:
                         'weight': inst_cfg['weight'],
                         'include': inst_cfg['include'],
                         'ticker': inst_def['ticker'],
-                        'scale': inst_def['scale'],
+                        'scale': conventions.all_conventions[inst_def['convention']]['scale'],
                     }
 
             constraints = None
