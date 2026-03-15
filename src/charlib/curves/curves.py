@@ -298,6 +298,7 @@ class CurvesSet:
                         'quote': 0,
                         'weight': inst_cfg['weight'],
                         'include': inst_cfg['include'],
+                        'ticker': inst_def['ticker'],
                     }
 
             constraints = None
@@ -461,8 +462,8 @@ class CalibrationBasket:
 
     def set_bloomberg_tickers(self):
         for key, value in self.basket.items():
-            if getattr(value, 'ticker', None) is not None:
-                self.tickers[key] = instruments.instruments_definitions[key]['ticker']
+            if 'ticker' in value:
+                self.tickers[key] = value['ticker']
 
 
     def set_market_quotes(self, market_quotes: dict) -> None:
@@ -575,6 +576,8 @@ def run_test():
 
     curves_definitions = curves_definitions["AUD"]
     my_curves_set = CurvesSet(reference_date=ql.Date.todaysDate(), curves_definitions=curves_definitions)
+    bbg_tickers = my_curves_set.calibration_basket.tickers
+    print(bbg_tickers)
     #print(my_curves_set.calibration_basket.basket)
     #print(my_curves_set.calibration_basket.price_all(my_curves_set))
 
@@ -584,7 +587,7 @@ def run_test():
     print(a.implied_rate_spread(my_curves_set))
 
     my_curves_set.calibration_basket.set_market_quotes(quotes)
-    my_curves_set.calibrate()
+    #my_curves_set.calibrate()
     t = np.arange(0, 1 + 1 / 365, 1 / 365)
     fwds = my_curves_set['aud.aonia.1d'].forward_rate(t[:-1], t[1:])
 
@@ -602,4 +605,4 @@ def run_test():
     #a = pricingobjects.Future("bom1", "eom1", {'forecasting_curve': 'aud.aonia.1d'})
     #print(a.price(my_curves_set))
 
-#run_test()
+run_test()
