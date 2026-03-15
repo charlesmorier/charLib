@@ -547,8 +547,8 @@ def run_test():
     }
 
     quotes = {
-        'aud_cash_1d': 0.0385,
-        "aud_ois_rba2": 0.04,
+        'aud_cash_1d': 3.85,
+        "aud_ois_rba2": 4,
         #'aud_ib_2': 95.98,
         'aud_ib_3': 95.835,
         'aud_ib_4': 95.785,
@@ -561,10 +561,10 @@ def run_test():
         'aud_ib_11': 95.46,
         'aud_ib_12': 95.46,
         #'aud_bob_1y': 15/10000.0,
-        'aud_bob_18m': 1 / 10000.0,
-        'aud_bob_2y': 1 / 10000.0,
-        'aud_bob_3y': 1 / 10000.0,
-        "aud_bill_3m": 0.045,
+        'aud_bob_18m': 1,
+        'aud_bob_2y': 1,
+        'aud_bob_3y': 1,
+        "aud_bill_3m": 4.5,
         "aud_sfe_1": 95,
         "aud_sfe_2": 95,
         "aud_sfe_3": 95,
@@ -573,7 +573,7 @@ def run_test():
         "aud_sfe_6": 95,
         "aud_sfe_7": 95,
         "aud_sfe_8": 95,
-        "aud_irs_3y": 0.05,
+        "aud_irs_3y": 5,
     }
 
     curves_definitions = curves_definitions["AUD"]
@@ -607,4 +607,4 @@ def run_test():
     #a = pricingobjects.Future("bom1", "eom1", {'forecasting_curve': 'aud.aonia.1d'})
     #print(a.price(my_curves_set))
 
-run_test()
+#run_test()
