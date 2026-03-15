@@ -141,7 +141,7 @@ class Swap(pricingobjects.PricingObject):
     ):
         super().__init__(curves_bindings)
         self.start_date = dates.parse_date(start_date)
-        self.end_date_unadj = dates.parse_date(end_date)
+        self.end_date_unadj = dates.parse_date(end_date, start_date)
         self.currency = currency
         self.notional = notional
         self.left_leg_details = left_leg_details
