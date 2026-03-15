@@ -191,63 +191,63 @@ instruments_definitions = {
 	"aud_sfe_1": {
         "start_date": "sfe1",
         "end_date": "3m",
-        "convention": "aud.fwd.bbsw3m",
+        "convention": "aud.sfe.bbsw3m",
         "ticker": "IR1 Comdty"
     },
 
 	"aud_sfe_2": {
         "start_date": "sfe2",
         "end_date": "3m",
-        "convention": "aud.fwd.bbsw3m",
+        "convention": "aud.sfe.bbsw3m",
         "ticker": "IR2 Comdty"
     },
 
 	"aud_sfe_3":{
         "start_date": "sfe3",
         "end_date": "3m",
-        "convention": "aud.fwd.bbsw3m",
+        "convention": "aud.sfe.bbsw3m",
         "ticker": "IR3 Comdty"
     },
 
 	"aud_sfe_4": {
         "start_date": "sfe4",
         "end_date": "3m",
-        "convention": "aud.fwd.bbsw3m",
+        "convention": "aud.sfe.bbsw3m",
         "ticker": "IR4 Comdty"
     },
 
 	"aud_sfe_5": {
         "start_date": "sfe5",
         "end_date": "3m",
-        "convention": "aud.fwd.bbsw3m",
+        "convention": "aud.sfe.bbsw3m",
         "ticker": "IR5 Comdty"
     },
 
 	"aud_sfe_6": {
         "start_date": "sfe6",
         "end_date": "3m",
-        "convention": "aud.fwd.bbsw3m",
+        "convention": "aud.sfe.bbsw3m",
         "ticker": "IR6 Comdty"
     },
 
 	"aud_sfe_7": {
         "start_date": "sfe7",
         "end_date": "3m",
-        "convention": "aud.fwd.bbsw3m",
+        "convention": "aud.sfe.bbsw3m",
         "ticker": "IR7 Comdty"
     },
 
 	"aud_sfe_8": {
         "start_date": "sfe8",
         "end_date": "3m",
-        "convention": "aud.fwd.bbsw3m",
+        "convention": "aud.sfe.bbsw3m",
         "ticker": "IR8 Comdty"
     },
 
 	"aud_sfe_9": {
         "start_date": "sfe9",
         "end_date": "3m",
-        "convention": "aud.fwd.bbsw3m",
+        "convention": "aud.sfe.bbsw3m",
         "ticker": "IR9 Comdty"},
 
 	"aud_irs_3y": {

@@ -490,9 +490,9 @@ def run_test():
         "aud.aonia.1d": {
           "instruments": {
             "aud_cash_1d":  {"include": True, "weight": 1},
-                "aud_ois_rba1": {"include": True, "weight": 1},
-                "aud_ib_1":     {"include": False, "weight": 1},
-                "aud_ib_2":     {"include": True, "weight": 1},
+                "aud_ois_rba2": {"include": True, "weight": 1},
+                #"aud_ib_1":     {"include": False, "weight": 1},
+                #"aud_ib_2":     {"include": True, "weight": 1},
                 "aud_ib_3":     {"include": True, "weight": 1},
                 "aud_ib_4":     {"include": True, "weight": 1},
                 "aud_ib_5":     {"include": True, "weight": 1},
@@ -503,49 +503,50 @@ def run_test():
                 "aud_ib_10":    {"include": True, "weight": 1},
                 "aud_ib_11":    {"include": True, "weight": 1},
                 "aud_ib_12":    {"include": True, "weight": 1},
-                #"aud_bob_1y":   {"include": False, "weight": 1},
-                #"aud_bob_18m":  {"include": False, "weight": 1},
-                #"aud_bob_2y":   {"include": False, "weight": 1},
-                #"aud_bob_3y":   {"include": False, "weight": 1}
+                #"aud_bob_1y":   {"include": True, "weight": 1},
+                "aud_bob_18m":  {"include": True, "weight": 1},
+                "aud_bob_2y":   {"include": True, "weight": 1},
+                "aud_bob_3y":   {"include": True, "weight": 1}
           },
             "constraints": {
-                "cash_rba1_rba2": {"instruments": ["aud_cash_1d", "aud_ois_rba1", "aud_ois_rba2"], "value": 0, "include": True, "weight": 0.001},
-                "rba1_rba2_rba3": {"instruments": ["aud_ois_rba1", "aud_ois_rba2", "aud_ois_rba3"], "value": 0, "include": True, "weight": 0.001},
+                #"cash_rba1_rba2": {"instruments": ["aud_cash_1d", "aud_ois_rba1", "aud_ois_rba2"], "value": 0, "include": True, "weight": 0.001},
+                #"rba1_rba2_rba3": {"instruments": ["aud_ois_rba1", "aud_ois_rba2", "aud_ois_rba3"], "value": 0, "include": True, "weight": 0.001},
                 "rba2_rba3_rba4": {"instruments": ["aud_ois_rba2", "aud_ois_rba3", "aud_ois_rba4"], "value": 0, "include": True, "weight": 0.001},
                 "rba3_rba4_rba5": {"instruments": ["aud_ois_rba3", "aud_ois_rba4", "aud_ois_rba5"], "value": 0, "include": True, "weight": 0.001},
                 "rba4_rba5_rba6": {"instruments": ["aud_ois_rba4", "aud_ois_rba5", "aud_ois_rba6"], "value": 0, "include": True, "weight": 0.001},
                 "rba5_rba6_rba7": {"instruments": ["aud_ois_rba5", "aud_ois_rba6", "aud_ois_rba7"], "value": 0, "include": True, "weight": 0.001},
                 "rba6_rba7_rba8": {"instruments": ["aud_ois_rba6", "aud_ois_rba7", "aud_ois_rba8"], "value": 0, "include": True, "weight": 0.001},
             },
-            "pillars": [ql.Date.todaysDate(), "rba1", "rba2", "rba3", "rba4", "rba5", "rba6", "rba7", "rba8"],
+            "pillars": [ql.Date.todaysDate(), "rba2", "rba3", "rba4", "rba5", "rba6", "rba7", "rba8"],
             "scheme": "linear",
             #"split_scheme": "bspline",
             #"split_node": dates.parse_date("rba8"),
         },
 
-        #"aud.bbsw.3m": {
-        #  "instruments": {
-        #        "aud_bill_3m":	{"include": False, "weight": 1},
-        ##        "aud_sfe_1":    {"include": False, "weight": 1},
-         #       "aud_sfe_2":    {"include": False, "weight": 1},
-         #       "aud_sfe_3":    {"include": False, "weight": 1},
-         #       "aud_sfe_4":    {"include": False, "weight": 1},
-         #       "aud_sfe_5":    {"include": False, "weight": 1},
-         #       "aud_sfe_6":    {"include": False, "weight": 1},
-         #       "aud_sfe_7":    {"include": False, "weight": 1},
-         ##       "aud_sfe_8":    {"include": False, "weight": 1},
-         #       "aud_irs_3y":   {"include": False, "weight": 1}
-         # },
-         #   "pillars": [ql.Date.todaysDate(), "sfe1", "sfe2", "sfe3", "sfe4", "sfe5", "sfe6", "sfe7", "sfe8", "sfe9", "3y"],
-         #   "base_curve": "aud.aonia.1d",
-         #   "interpolation": "bspline",
-        #}
+        "aud.bbsw.3m": {
+          "instruments": {
+                "aud_bill_3m":	{"include": True, "weight": 1},
+                "aud_sfe_1":    {"include": True, "weight": 1},
+                "aud_sfe_2":    {"include": True, "weight": 1},
+                "aud_sfe_3":    {"include": True, "weight": 1},
+                "aud_sfe_4":    {"include": True, "weight": 1},
+                "aud_sfe_5":    {"include": True, "weight": 1},
+                "aud_sfe_6":    {"include": True, "weight": 1},
+                "aud_sfe_7":    {"include": True, "weight": 1},
+                "aud_sfe_8":    {"include": True, "weight": 1},
+                "aud_irs_3y":   {"include": True, "weight": 1}
+          },
+            "pillars": [ql.Date.todaysDate(), "sfe1", "sfe2", "sfe3", "sfe4", "sfe5", "sfe6", "sfe7", "sfe8", "sfe9", "3y"],
+            "base_curve": "aud.aonia.1d",
+            "interpolation": "bspline",
+        }
       }
     }
 
     quotes = {
         'aud_cash_1d': 0.0385,
-        'aud_ib_2': 95.98,
+        "aud_ois_rba2": 0.04,
+        #'aud_ib_2': 95.98,
         'aud_ib_3': 95.835,
         'aud_ib_4': 95.785,
         'aud_ib_5': 95.755,
@@ -556,17 +557,31 @@ def run_test():
         'aud_ib_10': 95.46,
         'aud_ib_11': 95.46,
         'aud_ib_12': 95.46,
+        #'aud_bob_1y': 15/10000.0,
+        'aud_bob_18m': 1 / 10000.0,
+        'aud_bob_2y': 1 / 10000.0,
+        'aud_bob_3y': 1 / 10000.0,
+        "aud_bill_3m": 0.045,
+        "aud_sfe_1": 95,
+        "aud_sfe_2": 95,
+        "aud_sfe_3": 95,
+        "aud_sfe_4": 95,
+        "aud_sfe_5": 95,
+        "aud_sfe_6": 95,
+        "aud_sfe_7": 95,
+        "aud_sfe_8": 95,
+        "aud_irs_3y": 0.05,
     }
 
     curves_definitions = curves_definitions["AUD"]
     my_curves_set = CurvesSet(reference_date=ql.Date.todaysDate(), curves_definitions=curves_definitions)
     #print(my_curves_set.calibration_basket.basket)
-    print(my_curves_set.calibration_basket.price_all(my_curves_set))
+    #print(my_curves_set.calibration_basket.price_all(my_curves_set))
 
-    a = instruments.create_pricing_object_from_convention("1b", "1b", 1, 'aud.fwd.aonia')
+    a = instruments.create_pricing_object_from_convention("1b", "1y", 1, 'aud.tbs.qq.aonia.bbsw.aonia')
     print(a.start_date)
     print(a.end_date)
-    print(a.price(my_curves_set))
+    print(a.implied_rate_spread(my_curves_set))
 
     my_curves_set.calibration_basket.set_market_quotes(quotes)
     my_curves_set.calibrate()
