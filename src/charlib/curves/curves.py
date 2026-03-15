@@ -299,6 +299,7 @@ class CurvesSet:
                         'weight': inst_cfg['weight'],
                         'include': inst_cfg['include'],
                         'ticker': inst_def['ticker'],
+                        'scale': inst_def['scale'],
                     }
 
             constraints = None
@@ -468,7 +469,7 @@ class CalibrationBasket:
 
     def set_market_quotes(self, market_quotes: dict) -> None:
         for key, value in market_quotes.items():
-            self.basket[key]['quote'] = market_quotes[key]
+            self.basket[key]['quote'] = market_quotes[key] / self.basket[key]['scale']
 
 
     def get_market_quotes(self):
