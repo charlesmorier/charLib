@@ -374,6 +374,29 @@ def parse_date(value: ql.Date | str, anchor: ql.Date | str | None = None, calend
     if re.fullmatch(r"\d{4}-\d{2}-\d{2}", s):
         return _parse_iso(s)
 
+    # -- composite: e.g. "sfe1+3m", "rba2+1b" --------------------------------
+    m = re.fullmatch(r"([a-z0-9]+)([+-]\d+[dbwmy])", s)
+    if m:
+        base_date  = parse_date(m.group(1), anchor, calendar, imm_convention, bdc)
+        sign       = 1 if m.group(2)[0] == "+" else -1
+        tenor_str  = m.group(2)[1:]
+        unit_char  = tenor_str[-1]
+        n          = sign * int(tenor_str[:-1])
+        if unit_char == "b":
+            cal       = calendar if calendar is not None else ql.WeekendsOnly()
+            d, steps  = base_date, 0
+            direction = 1 if n > 0 else -1
+            while steps < abs(n):
+                d = d + direction
+                if cal.isBusinessDay(d):
+                    steps += 1
+            return d
+        else:
+            unit = TENOR_UNITS.get(unit_char, ql.Days)
+            if calendar is not None:
+                return calendar.advance(base_date, n, unit, ql.Following)
+            return base_date + ql.Period(n, unit)
+
     if re.fullmatch(r"(bom|eom)\d+", s):
         return _parse_bom_eom(s, calendar)
 

@@ -539,7 +539,7 @@ def run_test():
                 "aud_sfe_8":    {"include": True, "weight": 1},
                 "aud_irs_3y":   {"include": True, "weight": 1}
           },
-            "pillars": [ql.Date.todaysDate(), "sfe1", "sfe2", "sfe3", "sfe4", "sfe5", "sfe6", "sfe7", "sfe8", "sfe9", "3y"],
+            "pillars": [ql.Date.todaysDate(), "sfe1", "sfe1+3m", "sfe2+3m", "sfe3+3m", "sfe4+3m", "sfe5+3m", "sfe6+3m", "sfe7+3m", "sfe8+3m", "3y"],
             "base_curve": "aud.aonia.1d",
             "interpolation": "bspline",
         }
@@ -589,7 +589,7 @@ def run_test():
     print(a.implied_rate_spread(my_curves_set))
 
     my_curves_set.calibration_basket.set_market_quotes(quotes)
-    #my_curves_set.calibrate()
+    my_curves_set.calibrate()
     t = np.arange(0, 1 + 1 / 365, 1 / 365)
     fwds = my_curves_set['aud.aonia.1d'].forward_rate(t[:-1], t[1:])
 
