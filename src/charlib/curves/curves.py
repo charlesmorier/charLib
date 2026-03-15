@@ -582,8 +582,8 @@ def run_test():
     #print(my_curves_set.calibration_basket.price_all(my_curves_set))
 
     a = instruments.create_pricing_object_from_convention("1b", "1y", 1, 'aud.tbs.qq.aonia.bbsw.aonia')
-    print(a.start_date)
-    print(a.end_date)
+    #print(a.start_date)
+    ##print(a.end_date)
     print(a.implied_rate_spread(my_curves_set))
 
     my_curves_set.calibration_basket.set_market_quotes(quotes)
@@ -605,4 +605,4 @@ def run_test():
     #a = pricingobjects.Future("bom1", "eom1", {'forecasting_curve': 'aud.aonia.1d'})
     #print(a.price(my_curves_set))
 
-run_test()
+#run_test()
