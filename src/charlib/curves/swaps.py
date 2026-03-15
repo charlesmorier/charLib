@@ -2,44 +2,40 @@ import numpy as np
 from abc import ABC, abstractmethod
 import QuantLib as ql
 from charlib.curves import pricingobjects
+from charlib.utility import dates
 
 
 class SwapLeg(pricingobjects.PricingObject):
     def __init__(
         self,
-        start_date,
-        end_date,
-        leg_details,
-        rule=ql.DateGeneration.Forward,
-        eom=False,
-        curves_bindings=None
+        start_date: ql.Date,
+        end_date: ql.Date,
+        leg_details: dict,
+        rule: ql.DateGeneration = ql.DateGeneration.Forward,
+        eom: bool = False,
+        curves_bindings: dict | None = None
     ):
         super().__init__(curves_bindings)
 
         self.leg_details = leg_details
-
-        self._ql_accrual_schedule = ql.Schedule(start_date, end_date,
+        self.accrual_schedule = list(ql.Schedule(start_date, end_date,
                                                leg_details['frequency'],
                                                leg_details['payment_calendar'],
                                                leg_details['accrual_business_days_convention'],
                                                leg_details['accrual_business_days_convention'],
-                                               rule, eom)
-
-        self.accrual_schedule = list(self._ql_accrual_schedule)
+                                               rule, eom))
 
         self.accrual_yfs = [
             leg_details['daycount_convention'].yearFraction(t0, t1)
-            for t0, t1 in zip(self.accrual_schedule, self.accrual_schedule[1:])
+            for t0, t1 in zip(self.accrual_schedule[:-1], self.accrual_schedule[1:])
         ]
 
-        self._ql_payment_schedule = ql.Schedule(start_date, end_date,
+        self.payment_schedule = list(ql.Schedule(start_date, end_date,
                                                 leg_details['frequency'],
                                                 leg_details['payment_calendar'],
                                                 leg_details['payment_business_days_convention'],
                                                 leg_details['payment_business_days_convention'],
-                                                rule, eom)
-
-        self.payment_schedule = list(self._ql_payment_schedule)[1:]
+                                                rule, eom))
 
         if leg_details['payment_lag'] is not None:
             self.payment_schedule = [
@@ -79,7 +75,7 @@ class FixedSwapLeg(SwapLeg):
 
     def price(self, curves_set, rate_spread=1):
         df = curves_set[self.curves_bindings['discounting_curve']].discount_factor(
-            self.payment_schedule
+            self.payment_schedule[1:]
         )
         self.discount_factors = df
 
@@ -118,7 +114,7 @@ class FloatingSwapLeg(SwapLeg):
             self.accrual_schedule[:-1],
             self.fixing_schedule
         )
-        self.discount_factors = disc_curve.discount_factor(self.payment_schedule)
+        self.discount_factors = disc_curve.discount_factor(self.payment_schedule[1:])
 
         cash_flows = (
             np.array(self.accrual_yfs)
@@ -144,23 +140,16 @@ class Swap(pricingobjects.PricingObject):
         curves_bindings=None,
     ):
         super().__init__(curves_bindings)
-        if isinstance(start_date, ql.Date):
-            self.start_date = start_date
-        else:
-            self.start_date = start_date
-
-        if isinstance(end_date, ql.Date):
-            self.end_date_unadj = end_date
-        else:
-            self.end_date_unadj = left_leg_details['payment_calendar'].advance(
-                start_date, ql.Period(end_date), ql.Unadjusted
-            )
-
-        self.end_date = self.end_date_unadj
+        self.start_date = dates.parse_date(start_date)
+        self.end_date_unadj = dates.parse_date(end_date)
         self.currency = currency
         self.notional = notional
         self.left_leg_details = left_leg_details
         self.right_leg_details = right_leg_details
+
+    @property
+    def end_date(self) -> ql.Date:
+        pass
 
     @abstractmethod
     def price(self, curves_set, rate_spread=None):
@@ -197,8 +186,6 @@ class VanillaSwap(Swap):
             'forecasting_curve': self.curves_bindings['forecasting_curve'],
         }
 
-        self.end_date = self.left_swap_leg.end_date
-
     def price(self, curves_set, rate_spread=1):
         left_leg_npv = self.left_swap_leg.price(curves_set, rate_spread)
         right_leg_npv = self.right_swap_leg.price(curves_set)
@@ -210,6 +197,10 @@ class VanillaSwap(Swap):
         #print(left_leg_npv)
         #print(right_leg_npv)
         return right_leg_npv / left_leg_npv
+
+    @property
+    def end_date(self):
+        return self.left_swap_leg.end_date
 
 
 class TermBasisSwap(Swap):
@@ -239,7 +230,9 @@ class TermBasisSwap(Swap):
             'forecasting_curve': self.curves_bindings['right_leg_forecasting_curve'],
         }
 
-        self.end_date = self.left_swap_leg.end_date
+    @property
+    def end_date(self):
+        return self.left_swap_leg.end_date
 
     def price(self, curves_set, rate_spread=0):
         left_leg_npv = self.left_swap_leg.price(curves_set, rate_spread)

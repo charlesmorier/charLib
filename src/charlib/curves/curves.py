@@ -607,4 +607,4 @@ def run_test():
     #a = pricingobjects.Future("bom1", "eom1", {'forecasting_curve': 'aud.aonia.1d'})
     #print(a.price(my_curves_set))
 
-#run_test()
+run_test()
