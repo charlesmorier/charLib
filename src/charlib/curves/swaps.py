@@ -35,7 +35,7 @@ class SwapLeg(pricingobjects.PricingObject):
                                                 leg_details['payment_calendar'],
                                                 leg_details['payment_business_days_convention'],
                                                 leg_details['payment_business_days_convention'],
-                                                rule, eom))
+                                                rule, eom))[:-1]
 
         if leg_details['payment_lag'] is not None:
             self.payment_schedule = [
@@ -74,9 +74,7 @@ class FixedSwapLeg(SwapLeg):
         super().__init__(start_date, end_date, leg_details, rule, eom, curves_bindings)
 
     def price(self, curves_set, rate_spread=1):
-        df = curves_set[self.curves_bindings['discounting_curve']].discount_factor(
-            self.payment_schedule[1:]
-        )
+        df = curves_set[self.curves_bindings['discounting_curve']].discount_factor(self.payment_schedule)
         self.discount_factors = df
 
         cash_flows = np.array(self.accrual_yfs) * rate_spread * np.array(df)
@@ -114,7 +112,9 @@ class FloatingSwapLeg(SwapLeg):
             self.accrual_schedule[:-1],
             self.fixing_schedule
         )
-        self.discount_factors = disc_curve.discount_factor(self.payment_schedule[1:])
+
+        df = curves_set[self.curves_bindings['discounting_curve']].discount_factor(self.payment_schedule)
+        self.discount_factors = df
 
         cash_flows = (
             np.array(self.accrual_yfs)

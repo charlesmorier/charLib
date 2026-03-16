@@ -20,6 +20,13 @@ instruments_definitions = {
         "ticker": "BBSW3M Index"
     },
 
+	"aud_bill_6m": {
+        "start_date": "1b",
+        "end_date": "6m",
+        "convention": "aud.fwd.bbsw6m",
+        "ticker": "BBSW6M Index"
+    },
+
     "aud_ib_1": {
         "start_date": "bom0",
         "end_date": "eom0",
@@ -256,6 +263,60 @@ instruments_definitions = {
         "convention": "aud.irs.qq.bbsw.aonia",
         "ticker": "ADSWAP3Q Comdty"
     },
+
+	"aud_bob_sfe1": {
+        "start_date": "sfe1",
+        "end_date": "3m",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADFSPS1 IAUS Comdty"},
+
+	"aud_bob_sfe2": {
+        "start_date": "sfe2",
+        "end_date": "3m",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADFSPS2 IAUS Comdty"},
+
+	"aud_bob_sfe3": {
+        "start_date": "sfe3",
+        "end_date": "3m",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADFSPS3 IAUS Comdty"},
+
+	"aud_bob_sfe4": {
+        "start_date": "sfe4",
+        "end_date": "3m",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADFSPS4 IAUS Comdty"},
+
+	"aud_bob_sfe5": {
+        "start_date": "sfe5",
+        "end_date": "3m",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADFSPS5 IAUS Comdty"},
+
+	"aud_bob_sfe6": {
+        "start_date": "sfe6",
+        "end_date": "3m",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADFSPS6 IAUS Comdty"},
+
+	"aud_bob_sfe7": {
+        "start_date": "sfe7",
+        "end_date": "3m",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADFSPS7 IAUS Comdty"},
+
+	"aud_bob_sfe8": {
+        "start_date": "sfe8",
+        "end_date": "3m",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADFSPS8 IAUS Comdty"},
+
+	"aud_bob_sfe9": {
+        "start_date": "sfe9",
+        "end_date": "3m",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADFSPS9 IAUS Comdty"},
 
 	"aud_bob_1y": {
         "start_date": "1b",
