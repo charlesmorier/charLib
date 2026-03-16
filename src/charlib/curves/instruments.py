@@ -264,6 +264,91 @@ instruments_definitions = {
         "ticker": "ADSWAP3Q Comdty"
     },
 
+	"aud_irs_4y": {
+        "start_date": "1b",
+        "end_date": "4y",
+        "convention": "aud.irs.ss.bbsw.aonia",
+        "ticker": "ADSWAP4 Comdty"
+    },
+
+	"aud_irs_5y": {
+        "start_date": "1b",
+        "end_date": "3y",
+        "convention": "aud.irs.ss.bbsw.aonia",
+        "ticker": "ADSWAP5 Comdty"
+    },
+
+	"aud_irs_6y": {
+        "start_date": "1b",
+        "end_date": "6y",
+        "convention": "aud.irs.ss.bbsw.aonia",
+        "ticker": "ADSWAP6 Comdty"
+    },
+
+	"aud_irs_7y": {
+        "start_date": "1b",
+        "end_date": "7y",
+        "convention": "aud.irs.ss.bbsw.aonia",
+        "ticker": "ADSWAP7 Comdty"
+    },
+
+	"aud_irs_8y": {
+        "start_date": "1b",
+        "end_date": "8y",
+        "convention": "aud.irs.ss.bbsw.aonia",
+        "ticker": "ADSWAP8 Comdty"
+    },
+
+	"aud_irs_9y": {
+        "start_date": "1b",
+        "end_date": "9y",
+        "convention": "aud.irs.ss.bbsw.aonia",
+        "ticker": "ADSWAP9 Comdty"
+    },
+
+	"aud_irs_10y": {
+        "start_date": "1b",
+        "end_date": "10y",
+        "convention": "aud.irs.ss.bbsw.aonia",
+        "ticker": "ADSWAP10 Comdty"
+    },
+
+	"aud_irs_12y": {
+        "start_date": "1b",
+        "end_date": "12y",
+        "convention": "aud.irs.ss.bbsw.aonia",
+        "ticker": "ADSWAP12 Comdty"
+    },
+
+	"aud_irs_15y": {
+        "start_date": "1b",
+        "end_date": "15y",
+        "convention": "aud.irs.ss.bbsw.aonia",
+        "ticker": "ADSWAP15 Comdty"
+    },
+
+	"aud_irs_20y": {
+        "start_date": "1b",
+        "end_date": "20y",
+        "convention": "aud.irs.ss.bbsw.aonia",
+        "ticker": "ADSWAP20 Comdty"
+    },
+
+	"aud_irs_25y": {
+        "start_date": "1b",
+        "end_date": "25y",
+        "convention": "aud.irs.ss.bbsw.aonia",
+        "ticker": "ADSWAP25 Comdty"
+    },
+
+	"aud_irs_30y": {
+        "start_date": "1b",
+        "end_date": "30y",
+        "convention": "aud.irs.ss.bbsw.aonia",
+        "ticker": "ADSWAP30 Comdty"
+    },
+
+
 	"aud_bob_sfe1": {
         "start_date": "sfe1",
         "end_date": "3m",
@@ -345,6 +430,208 @@ instruments_definitions = {
         "ticker": "ADOIQQ3 Comdty"
     },
 
+	"aud_bob_3y": {
+        "start_date": "1b",
+        "end_date": "3y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ3 Comdty"
+    },
+
+	"aud_bob_4y": {
+        "start_date": "1b",
+        "end_date": "4y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ4 Comdty"
+    },
+
+	"aud_bob_5y": {
+        "start_date": "1b",
+        "end_date": "5y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ5 Comdty"
+    },
+
+	"aud_bob_6y": {
+        "start_date": "1b",
+        "end_date": "6y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ6 Comdty"
+    },
+
+	"aud_bob_7y": {
+        "start_date": "1b",
+        "end_date": "7y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ7 Comdty"
+    },
+
+	"aud_bob_8y": {
+        "start_date": "1b",
+        "end_date": "8y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ8 Comdty"
+    },
+
+	"aud_bob_9y": {
+        "start_date": "1b",
+        "end_date": "9y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ9 Comdty"
+    },
+
+	"aud_bob_10y": {
+        "start_date": "1b",
+        "end_date": "10y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ10 Comdty"
+    },
+
+	"aud_bob_12y": {
+        "start_date": "1b",
+        "end_date": "12y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ12 Comdty"
+    },
+
+	"aud_bob_15y": {
+        "start_date": "1b",
+        "end_date": "15y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ15 Comdty"
+    },
+
+	"aud_bob_20y": {
+        "start_date": "1b",
+        "end_date": "20y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ20 Comdty"
+    },
+
+	"aud_bob_30y": {
+        "start_date": "1b",
+        "end_date": "30y",
+        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
+        "ticker": "ADOIQQ30 Comdty"
+    },
+
+	"aud_6s3s_6m": {
+        "start_date": "1b",
+        "end_date": "6m",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCFF Comdty"
+    },
+
+	"aud_6s3s_1y": {
+        "start_date": "1b",
+        "end_date": "1y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF1 Comdty"
+    },
+
+	"aud_6s3s_18m": {
+        "start_date": "1b",
+        "end_date": "18m",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF1F Comdty"
+    },
+
+	"aud_6s3s_2y": {
+        "start_date": "1b",
+        "end_date": "2y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF2 Comdty"
+    },
+
+	"aud_6s3s_3y": {
+        "start_date": "1b",
+        "end_date": "3y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF3 Comdty"
+    },
+
+	"aud_6s3s_4y": {
+        "start_date": "1b",
+        "end_date": "4y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF4 Comdty"
+    },
+
+	"aud_6s3s_5y": {
+        "start_date": "1b",
+        "end_date": "5y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF5 Comdty"
+    },
+
+	"aud_6s3s_6y": {
+        "start_date": "1b",
+        "end_date": "6y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF6 Comdty"
+    },
+
+	"aud_6s3s_7y": {
+        "start_date": "1b",
+        "end_date": "7y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF7 Comdty"
+    },
+
+	"aud_6s3s_8y": {
+        "start_date": "1b",
+        "end_date": "8y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF8 Comdty"
+    },
+
+	"aud_6s3s_9y": {
+        "start_date": "1b",
+        "end_date": "9y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF9 Comdty"
+    },
+
+	"aud_6s3s_10y": {
+        "start_date": "1b",
+        "end_date": "10y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF10 Comdty"
+    },
+
+	"aud_6s3s_12y": {
+        "start_date": "1b",
+        "end_date": "12y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF12 Comdty"
+    },
+
+	"aud_6s3s_15y": {
+        "start_date": "1b",
+        "end_date": "15y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF15 Comdty"
+    },
+
+	"aud_6s3s_20y": {
+        "start_date": "1b",
+        "end_date": "20y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF20 Comdty"
+    },
+
+	"aud_6s3s_25y": {
+        "start_date": "1b",
+        "end_date": "25y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF25 Comdty"
+    },
+
+	"aud_6s3s_30y": {
+        "start_date": "1b",
+        "end_date": "30y",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBCF30 Comdty"
+    },
 }
 
 
