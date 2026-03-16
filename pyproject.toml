@@ -1,6 +1,6 @@
 [project]
 name = "charlib"
-version = "0.0.10.1"
+version = "0.0.10.2"
 description = "Charlie's library"
 requires-python = ">=3.10"
 dependencies = [
