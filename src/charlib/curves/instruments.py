@@ -430,13 +430,6 @@ instruments_definitions = {
         "ticker": "ADOIQQ3 Comdty"
     },
 
-	"aud_bob_3y": {
-        "start_date": "1b",
-        "end_date": "3y",
-        "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ3 Comdty"
-    },
-
 	"aud_bob_4y": {
         "start_date": "1b",
         "end_date": "4y",
