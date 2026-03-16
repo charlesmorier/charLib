@@ -407,111 +407,111 @@ instruments_definitions = {
         "start_date": "1b",
         "end_date": "1y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ1 IAUS Curncy"},
+        "ticker": "ADBBCO1 IAUS Curncy"},
 
 	"aud_bob_18m": {
         "start_date": "1b",
         "end_date": "18m",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ1F Curncy"
+        "ticker": "ADBBCO1F Curncy"
     },
 
 	"aud_bob_2y": {
         "start_date": "1b",
         "end_date": "2y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ2 Curncy"
+        "ticker": "ADBBCO2 Curncy"
     },
 
 	"aud_bob_3y": {
         "start_date": "1b",
         "end_date": "3y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ3 Curncy"
+        "ticker": "ADBBCO3 Curncy"
     },
 
 	"aud_bob_4y": {
         "start_date": "1b",
         "end_date": "4y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ4 Curncy"
+        "ticker": "ADBBCO4 Curncy"
     },
 
 	"aud_bob_5y": {
         "start_date": "1b",
         "end_date": "5y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ5 Curncy"
+        "ticker": "ADBBCO5 Curncy"
     },
 
 	"aud_bob_6y": {
         "start_date": "1b",
         "end_date": "6y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ6 Curncy"
+        "ticker": "ADBBCO6 Curncy"
     },
 
 	"aud_bob_7y": {
         "start_date": "1b",
         "end_date": "7y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ7 Curncy"
+        "ticker": "ADBBCO7 Curncy"
     },
 
 	"aud_bob_8y": {
         "start_date": "1b",
         "end_date": "8y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ8 Curncy"
+        "ticker": "ADBBCO8 Curncy"
     },
 
 	"aud_bob_9y": {
         "start_date": "1b",
         "end_date": "9y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ9 Curncy"
+        "ticker": "ADBBCO9 Curncy"
     },
 
 	"aud_bob_10y": {
         "start_date": "1b",
         "end_date": "10y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ10 Curncy"
+        "ticker": "ADBBCO10 Curncy"
     },
 
 	"aud_bob_12y": {
         "start_date": "1b",
         "end_date": "12y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ12 Curncy"
+        "ticker": "ADBBCO12 Curncy"
     },
 
 	"aud_bob_15y": {
         "start_date": "1b",
         "end_date": "15y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ15 Curncy"
+        "ticker": "ADBBCO15 Curncy"
     },
 
 	"aud_bob_20y": {
         "start_date": "1b",
         "end_date": "20y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ20 Curncy"
+        "ticker": "ADBBCO20 Curncy"
     },
 
 	"aud_bob_25y": {
         "start_date": "1b",
         "end_date": "25y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ25 Curncy"
+        "ticker": "ADBBCO25 Curncy"
     },
 
 	"aud_bob_30y": {
         "start_date": "1b",
         "end_date": "30y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADOIQQ30 Curncy"
+        "ticker": "ADBBCO30 Curncy"
     },
 
 	"aud_6s3s_6m": {
