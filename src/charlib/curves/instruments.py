@@ -427,7 +427,7 @@ instruments_definitions = {
         "start_date": "1b",
         "end_date": "3y",
         "convention": "aud.tbs.qq.aonia.bbsw.aonia",
-        "ticker": "ADBBCO3 Curncy"
+        "ticker": "ADBBCO3 IAUS Curncy"
     },
 
 	"aud_bob_4y": {
