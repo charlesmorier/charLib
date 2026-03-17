@@ -250,10 +250,10 @@ class CurvesSet:
         return self.get_curve(this_curve)
 
 
-    def __getattr__(self, this_curve):
-        if this_curve != "curves_mapping" and self.curves_mapping is not None and this_curve in self.curves_mapping:
-            return self.curves_mapping[this_curve]
-        raise AttributeError(f"'{type(self).__name__}' object has no attribute '{this_curve}'")
+    # def __getattr__(self, this_curve):
+    #     if this_curve != "curves_mapping" and self.curves_mapping is not None and this_curve in self.curves_mapping:
+    #         return self.curves_mapping[this_curve]
+    #     raise AttributeError(f"'{type(self).__name__}' object has no attribute '{this_curve}'")
 
 
     def __contains__(self, key):
@@ -356,10 +356,10 @@ class CurvesSet:
 
     def calibrate(self, fast_rebuild_mode = False):
         #self.calibration_basket = calibration_basket.subset_basket
-        if self.jacobian_matrix is None or fast_rebuild_mode is False:
-            theta = self.full_calibration()
-        else:
+        if self.jacobian_matrix is not None and fast_rebuild_mode:
             theta = self.fast_calibration()
+        else:
+            theta = self.full_calibration()
         solving_values_tmp = np.split(theta, self.splits)
         for (key, curve), x in zip(self.curves_mapping.items(), solving_values_tmp):
             self._unpack_solving_values(curve, x)
