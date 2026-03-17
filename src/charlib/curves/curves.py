@@ -487,7 +487,10 @@ class CalibrationBasket:
 
 
     def set_market_quotes(self, market_quotes: dict) -> None:
-        for key, value in market_quotes.items():
+        for key, value in self.basket.items():
+            if key not in market_quotes:
+                print(f"Warning: '{key}' not found in market quotes, skipping.")
+                continue
             self.basket[key]['quote'] = market_quotes[key] / self.basket[key]['scale']
 
 
