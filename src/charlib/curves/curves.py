@@ -11,6 +11,7 @@ from charlib.utility import dates
 from charlib.curves import instruments
 from charlib.curves import conventions
 
+_ACT365 = ql.Actual365Fixed()
 
 class Curve(ABC):
  
@@ -39,11 +40,11 @@ class Curve(ABC):
         return self._nodes
  
     @nodes.setter
-    def nodes(self, nodes: list[ql.Date] | list[float] | None) -> None:
+    def nodes(self, nodes):
         self._nodes = nodes
         if nodes is not None:
             if all(isinstance(n, ql.Date) for n in nodes):
-                self.t = [ql.Actual365Fixed().yearFraction(self.reference_date, d) for d in nodes]
+                self.t = [_ACT365.yearFraction(self.reference_date, d) for d in nodes]
             elif all(isinstance(n, float) for n in nodes):
                 self.t = list(nodes)
             else:
@@ -74,26 +75,39 @@ class Curve(ABC):
  
     def forward_rate(self, start_date, end_date):
         if isinstance(start_date, (list, tuple, np.ndarray)) != isinstance(end_date, (list, tuple, np.ndarray)):
-            raise TypeError(f"start_date and end_date must both be float or ql.Date, or both arrays; got {type(start_date).__name__} vs {type(end_date).__name__}")
-        if isinstance(start_date, ql.Date):
-            start_date = ql.Actual365Fixed().yearFraction(self.reference_date, start_date)
-        elif isinstance(start_date, (list, tuple, np.ndarray)):
-            start_date = np.array([ql.Actual365Fixed().yearFraction(self.reference_date, t) if isinstance(t, ql.Date) else float(t) for t in start_date]) 
-        if isinstance(end_date, ql.Date):
-            end_date = ql.Actual365Fixed().yearFraction(self.reference_date, end_date)
-        elif isinstance(end_date, (list, tuple, np.ndarray)):
-            end_date = np.array([ql.Actual365Fixed().yearFraction(self.reference_date, t) if isinstance(t, ql.Date) else float(t) for t in end_date]) 
-        return (self.discount_factor(start_date) / self.discount_factor(end_date) - 1.0) / ((np.array(end_date) - np.array(start_date)))
- 
+            raise TypeError(
+                f"start_date and end_date must both be scalar or both arrays; "
+                f"got {type(start_date).__name__} vs {type(end_date).__name__}"
+            )
+        t0 = self._to_t(start_date)
+        t1 = self._to_t(end_date)
+        return (self.discount_factor(t0) / self.discount_factor(t1) - 1.0) / (np.asarray(t1) - np.asarray(t0))
+        # if isinstance(start_date, (list, tuple, np.ndarray)) != isinstance(end_date, (list, tuple, np.ndarray)):
+        #     raise TypeError(f"start_date and end_date must both be float or ql.Date, or both arrays; got {type(start_date).__name__} vs {type(end_date).__name__}")
+        # if isinstance(start_date, ql.Date):
+        #     start_date = ql.Actual365Fixed().yearFraction(self.reference_date, start_date)
+        # elif isinstance(start_date, (list, tuple, np.ndarray)):
+        #     start_date = np.array([ql.Actual365Fixed().yearFraction(self.reference_date, t) if isinstance(t, ql.Date) else float(t) for t in start_date])
+        # if isinstance(end_date, ql.Date):
+        #     end_date = ql.Actual365Fixed().yearFraction(self.reference_date, end_date)
+        # elif isinstance(end_date, (list, tuple, np.ndarray)):
+        #     end_date = np.array([ql.Actual365Fixed().yearFraction(self.reference_date, t) if isinstance(t, ql.Date) else float(t) for t in end_date])
+        # return (self.discount_factor(start_date) / self.discount_factor(end_date) - 1.0) / ((np.array(end_date) - np.array(start_date)))
+        #
     def instantaneous_forward_rate(self, this_date, dt = 1.0/365.0):
-        if isinstance(this_date, ql.Date):
-            this_date = ql.Actual365Fixed().yearFraction(self.reference_date, this_date)
-        elif isinstance(this_date, (list, tuple, np.ndarray)):
-            this_date = np.array([ql.Actual365Fixed().yearFraction(self.reference_date, t) if isinstance(t, ql.Date) else float(t) for t in this_date])
-        dfs = self.discount_factor(this_date)
-        dfs_bumped = self.discount_factor(this_date + float(dt))
+        t = self._to_t(this_date)
+        dfs = self.discount_factor(t)
+        dfs_bumped = self.discount_factor(np.asarray(t) + float(dt))
         fwd = (np.log(dfs) - np.log(dfs_bumped)) / float(dt)
-        return fwd.item() if fwd.size == 1 else fwd
+        return fwd.item() if np.asarray(fwd).size == 1 else fwd
+        # if isinstance(this_date, ql.Date):
+        #     this_date = ql.Actual365Fixed().yearFraction(self.reference_date, this_date)
+        # elif isinstance(this_date, (list, tuple, np.ndarray)):
+        #     this_date = np.array([ql.Actual365Fixed().yearFraction(self.reference_date, t) if isinstance(t, ql.Date) else float(t) for t in this_date])
+        # dfs = self.discount_factor(this_date)
+        # dfs_bumped = self.discount_factor(this_date + float(dt))
+        # fwd = (np.log(dfs) - np.log(dfs_bumped)) / float(dt)
+        # return fwd.item() if fwd.size == 1 else fwd
 
 
     def _try_build_engine(self) -> None:
@@ -110,10 +124,10 @@ class Curve(ABC):
 
     def _to_t(self, date_or_t) -> float | np.ndarray:
         if isinstance(date_or_t, ql.Date):
-            return ql.Actual365Fixed().yearFraction(self.reference_date, date_or_t)
+            return _ACT365.yearFraction(self.reference_date, date_or_t)
         elif isinstance(date_or_t, (list, tuple, np.ndarray)):
             return np.array([
-                ql.Actual365Fixed().yearFraction(self.reference_date, t) if isinstance(t, ql.Date) else float(t)
+                _ACT365.yearFraction(self.reference_date, t) if isinstance(t, ql.Date) else float(t)
                 for t in date_or_t
             ])
         return float(date_or_t)
@@ -151,19 +165,23 @@ class BaseCurve(Curve):
             self.values = dfs
  
     def discount_factor(self, this_date):
-        if isinstance(this_date, ql.Date):
-            this_date = ql.Actual365Fixed().yearFraction(self.reference_date, this_date)
-        elif isinstance(this_date, (list, tuple, np.ndarray)):
-            this_date = np.array([ql.Actual365Fixed().yearFraction(self.reference_date, t) if isinstance(t, ql.Date) else float(t) for t in this_date])
-        df = self.interpolation_engine.interpolate(this_date)
-        return np.exp(df)
+        t = self._to_t(this_date)
+        return np.exp(self.interpolation_engine.interpolate(t))
+        # if isinstance(this_date, ql.Date):
+        #     this_date = ql.Actual365Fixed().yearFraction(self.reference_date, this_date)
+        # elif isinstance(this_date, (list, tuple, np.ndarray)):
+        #     this_date = np.array([ql.Actual365Fixed().yearFraction(self.reference_date, t) if isinstance(t, ql.Date) else float(t) for t in this_date])
+        # df = self.interpolation_engine.interpolate(this_date)
+        # return np.exp(df)
  
     def zero_rate(self, this_date):
-        if isinstance(this_date, ql.Date):
-            this_date = ql.Actual365Fixed().yearFraction(self.reference_date, this_date)
-        df = self.discount_factor(this_date)
-        z = -np.log(df) / this_date
-        return z
+        t = self._to_t(this_date)
+        return -np.log(self.discount_factor(t)) / t
+        # if isinstance(this_date, ql.Date):
+        #     this_date = ql.Actual365Fixed().yearFraction(self.reference_date, this_date)
+        # df = self.discount_factor(this_date)
+        # z = -np.log(df) / this_date
+        # return z
  
  
 class SpreadCurve(Curve):
@@ -200,11 +218,13 @@ class SpreadCurve(Curve):
             self.values = spreads
  
     def discount_factor(self, this_date):
-        if isinstance(this_date, ql.Date):
-            this_date = ql.Actual365Fixed().yearFraction(self.reference_date, this_date)
-        elif isinstance(this_date, (list, tuple, np.ndarray)):
-            this_date = np.array([ql.Actual365Fixed().yearFraction(self.reference_date, t) if isinstance(t, ql.Date) else float(t) for t in this_date])
-        return self.base_curve.discount_factor(this_date) * np.exp(self.interpolation_engine.interpolate(this_date))
+        t = self._to_t(this_date)
+        return self.base_curve.discount_factor(t) * np.exp(self.interpolation_engine.interpolate(t))
+        # if isinstance(this_date, ql.Date):
+        #     this_date = ql.Actual365Fixed().yearFraction(self.reference_date, this_date)
+        # elif isinstance(this_date, (list, tuple, np.ndarray)):
+        #     this_date = np.array([ql.Actual365Fixed().yearFraction(self.reference_date, t) if isinstance(t, ql.Date) else float(t) for t in this_date])
+        # return self.base_curve.discount_factor(this_date) * np.exp(self.interpolation_engine.interpolate(this_date))
  
     def zero_rate(self, this_date):
         raise NotImplementedError('This curve is for forecasting forward rates only')
