@@ -81,7 +81,7 @@ all_conventions = {
                       'accrual_business_days_convention': convention_modified_following,
                       'payment_business_days_convention': convention_following,
                       'payment_lag': None},
-        'curves_bindings': {'discounting_curve': 'aud.aonia.1', 'forecasting_curve': 'aud.aonia.1d'},
+        'curves_bindings': {'discounting_curve': 'aud.aonia.1d', 'forecasting_curve': 'aud.aonia.1d'},
         'scale': 100
     },
  

@@ -273,7 +273,7 @@ instruments_definitions = {
 
 	"aud_irs_5y": {
         "start_date": "1b",
-        "end_date": "3y",
+        "end_date": "5y",
         "convention": "aud.irs.ss.bbsw.aonia",
         "ticker": "ADSWAP5 IAUS Curncy"
     },

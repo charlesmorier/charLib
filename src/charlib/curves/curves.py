@@ -10,7 +10,6 @@ from charlib.maths import interpolation
 from charlib.utility import dates
 from charlib.curves import instruments
 from charlib.curves import conventions
-from charlib.curves import pricingobjects
 
 
 class Curve(ABC):
@@ -379,9 +378,8 @@ class CurvesSet:
         for key, value in self.calibration_basket.items():
             print(f"key: {key} market: {value['quote']} model: {value['object'].implied_rate_spread(self)}")
             fit.append(np.sqrt(value['weight']) * (value['object'].implied_rate_spread(self) - value['quote']))
-        obj = fit
         self.iter += 1
-        return obj
+        return fit
 
 
     def calibration_results(self):
@@ -475,7 +473,7 @@ class CalibrationBasket:
 
     def get_market_quotes(self):
         # Used on subset_basket for the fast calibration
-        return [value['quote'] for key, value in self.subset_basket.items()]
+        return [value['quote'] for key, value in self.basket.items()]
 
 
     def price_all(self, curves_set):

@@ -57,7 +57,7 @@ class SwapLeg(pricingobjects.PricingObject):
         return self.payment_schedule[-1]
 
     @abstractmethod
-    def implied_rate_spread(self, curves_set, rate_spread=None):
+    def implied_rate_spread(self, curves_set):
         pass
 
 
@@ -97,7 +97,7 @@ class FloatingSwapLeg(SwapLeg):
         super().__init__(start_date, end_date, leg_details, rule, eom, curves_bindings)
 
         if leg_details['frequency'] == ql.Period(ql.NoFrequency):
-            self.fixing_schedule = [self.accrual_schedule[-1]]
+            self.fixing_schedule = [self.accrual_schedule[0]]
         else:
             self.fixing_schedule = [
                 leg_details['fixing_calendar'].advance(t, leg_details['frequency'], ql.Following)
@@ -147,7 +147,7 @@ class Swap(pricingobjects.PricingObject):
         self.left_leg_details = left_leg_details
         self.right_leg_details = right_leg_details
 
-    @property
+    @abstractmethod
     def end_date(self) -> ql.Date:
         pass
 
@@ -239,7 +239,7 @@ class TermBasisSwap(Swap):
         right_leg_npv = self.right_swap_leg.price(curves_set)
         return self.notional * (left_leg_npv - right_leg_npv)
 
-    def implied_rate_spread(self, curves_set, rate_spread=None):
+    def implied_rate_spread(self, curves_set):
         left_leg_npv = self.left_swap_leg.price(curves_set, 0)
         right_leg_npv = self.right_swap_leg.price(curves_set, 0)
 

@@ -13,7 +13,7 @@ class PricingObject(ABC):
         pass
 
     @abstractmethod
-    def implied_rate_spread(self, curves_set, rate_spread=None):
+    def implied_rate_spread(self, curves_set):
         pass
 
 
@@ -27,7 +27,7 @@ class ForwardRate(PricingObject):
         curve = curves_set[self.curves_bindings['forecasting_curve']]
         return curve.forward_rate(self.start_date, self.end_date)
 
-    def implied_rate_spread(self, curves_set, rate_spread=None):
+    def implied_rate_spread(self, curves_set):
         return self.price(curves_set)
 
 
@@ -42,7 +42,7 @@ class Future(PricingObject):
         curve = curves_set[self.curves_bindings['forecasting_curve']]
         return 100.0 * (1.0 - curve.forward_rate(self.start_date, self.end_date))
 
-    def implied_rate_spread(self, curves_set, rate_spread=None):
+    def implied_rate_spread(self, curves_set):
         return self.price(curves_set)
 
 
@@ -66,7 +66,7 @@ class Spread(PricingObject):
             - self.pricing_object1.price(curves_set)
         )
 
-    def implied_rate_spread(self, curves_set, rate_spread=None):
+    def implied_rate_spread(self, curves_set):
         return (
             self.pricing_object2.implied_rate_spread(curves_set)
             - self.pricing_object1.implied_rate_spread(curves_set)
@@ -99,7 +99,7 @@ class Fly(PricingObject):
             - self.pricing_object3.price(curves_set)
         )
 
-    def implied_rate_spread(self, curves_set, rate_spread=None):
+    def implied_rate_spread(self, curves_set):
         return (
             2.0 * self.pricing_object2.implied_rate_spread(curves_set)
             - self.pricing_object1.implied_rate_spread(curves_set)
