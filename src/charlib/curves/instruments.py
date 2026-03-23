@@ -195,6 +195,31 @@ instruments_definitions = {
         "ticker": "ADSF12A IAUS Curncy"
     },
 
+    "aud_ois_rba13": {
+        "start_date": "rba13",
+        "end_date": "rba14",
+        "convention": "aud.fwd.aonia",
+        "ticker": "ADSF13A IAUS Curncy"
+    },
+
+    "aud_ois_rba14": {
+        "start_date": "rba14",
+        "end_date": "rba15",
+        "convention": "aud.fwd.aonia"
+    },
+
+    "aud_ois_rba15": {
+        "start_date": "rba16",
+        "end_date": "rba16",
+        "convention": "aud.fwd.aonia"
+    },
+
+    "aud_ois_rba16": {
+        "start_date": "rba16",
+        "end_date": "rba17",
+        "convention": "aud.fwd.aonia"
+    },
+
 	"aud_sfe_1": {
         "start_date": "sfe1",
         "end_date": "3m",
@@ -256,6 +281,26 @@ instruments_definitions = {
         "end_date": "3m",
         "convention": "aud.sfe.bbsw3m",
         "ticker": "IR9 Comdty"},
+
+    "aud_sfe_10": {
+        "start_date": "sfe10",
+        "end_date": "3m",
+        "convention": "aud.sfe.bbsw3m",
+        "ticker": "IR10 Comdty"
+    },
+
+    "aud_sfe_11": {
+        "start_date": "sfe11",
+        "end_date": "3m",
+        "convention": "aud.sfe.bbsw3m",
+        "ticker": "IR11 Comdty"
+    },
+
+    "aud_sfe_12": {
+        "start_date": "sfe12",
+        "end_date": "3m",
+        "convention": "aud.sfe.bbsw3m",
+        "ticker": "IR12 Comdty"},
 
 	"aud_irs_3y": {
         "start_date": "1b",
@@ -519,6 +564,34 @@ instruments_definitions = {
         "end_date": "6m",
         "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
         "ticker": "ADBBCFF IAUS Curncy"
+    },
+
+    "aud_6s3s_sfe1": {
+        "start_date": "sfe1",
+        "end_date": "6m",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBSI1 IAUS Curncy"
+    },
+
+    "aud_6s3s_sfe2": {
+        "start_date": "sfe2",
+        "end_date": "6m",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBSI2 IAUS Curncy"
+    },
+
+    "aud_6s3s_sfe3": {
+        "start_date": "sfe1",
+        "end_date": "6m",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBSI3 IAUS Curncy"
+    },
+
+    "aud_6s3s_sfe4": {
+        "start_date": "sfe4",
+        "end_date": "6m",
+        "convention": "aud.tbs.qs.bbsw.bbsw.aonia",
+        "ticker": "ADBBSI4 IAUS Curncy"
     },
 
 	"aud_6s3s_1y": {

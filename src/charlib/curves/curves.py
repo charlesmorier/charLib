@@ -381,7 +381,7 @@ class CurvesSet:
     def fast_calibration(self):
         # Currently, there is no check re size of the Jacobian vs size of instruments.
         # Also there is no check re tolerance vs market move
-        print('i am faaaaaast!!!')
+        #print('i am faaaaaast!!!')
         q_new = [value['quote'] for key, value in self.calibration_basket.items()]
         d_q = np.array(q_new) - np.array(self.q_old)
         lam = 1e-10
@@ -396,7 +396,7 @@ class CurvesSet:
             self._unpack_solving_values(curve, x)
         fit = []
         for key, value in self.calibration_basket.items():
-            print(f"key: {key} market: {value['quote']} model: {value['object'].implied_rate_spread(self)}")
+            #print(f"key: {key} market: {value['quote']} model: {value['object'].implied_rate_spread(self)}")
             fit.append(np.sqrt(value['weight']) * (value['object'].implied_rate_spread(self) - value['quote']))
         self.iter += 1
         return fit
