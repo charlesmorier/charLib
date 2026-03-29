@@ -1,7 +1,7 @@
 [project]
 name = "charlib"
-version = "0.0.11.4"
-description = "Charlie's library"                                                                                                                                                                                    58
+version = "0.0.11.5"
+description = "The charLib"                                                                                                                                                                                    58
 requires-python = ">=3.10"
 dependencies = [
     "numpy",
