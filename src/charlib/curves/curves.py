@@ -370,7 +370,7 @@ class CurvesSet:
         self.n = [(len(value) - 1) for value in self.curves_mapping.values()]
         self.splits = np.cumsum(self.n)[:-1]
         solving_values = np.concatenate([self._pack_solving_values(curve) for key, curve in self.curves_mapping.items()]) 
-        res = least_squares(self.objective_function, solving_values, method='lm', ftol=1e-12, xtol=1e-12, gtol=1e-12)
+        res = least_squares(self.objective_function, solving_values, method='trf', ftol=1e-12, xtol=1e-12, gtol=1e-12)
         theta = res.x
         self.theta = theta
         self.jacobian_matrix = res.jac
